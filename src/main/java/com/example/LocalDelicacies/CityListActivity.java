@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 public class CityListActivity extends Activity {
     private ListView listView;
-    private Object cityAdapter;
+    private CityAdapter cityAdapter;
 
     /**
      * Called when the activity is first created.
@@ -17,9 +17,10 @@ public class CityListActivity extends Activity {
         setContentView(R.layout.city_list);
 
         listView = (ListView) findViewById(R.id.cityList);
+        cityAdapter = new CityAdapter();
     }
 
-    public Object getCityAdapter() {
+    public CityAdapter getCityAdapter() {
         return cityAdapter;
     }
 }
