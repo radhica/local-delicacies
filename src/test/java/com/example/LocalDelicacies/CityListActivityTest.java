@@ -34,4 +34,9 @@ public class CityListActivityTest {
 
         assertNotNull(cityListActivity.findViewById(R.id.cityList));
     }
+
+    @Test
+    public void shouldHaveCityAdapter() throws Exception{
+        assertNotNull(cityListActivity.getCityAdapter());
+    }
 }
