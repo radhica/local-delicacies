@@ -3,7 +3,10 @@ package com.example.LocalDelicacies;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+
+import java.awt.peer.RobotPeer;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +17,11 @@ public class CityListActivityTest {
 
     @Before
     public void setUp() {
-        cityListActivity = new CityListActivity();
+        cityListActivity = Robolectric.buildActivity(CityListActivity.class)
+                            .create()
+                            .start()
+                            .resume()
+                            .get();
     }
 
     @Test
@@ -24,6 +31,7 @@ public class CityListActivityTest {
 
     @Test
     public void shouldHaveListView() throws Exception {
-        assertNotNull(cityListActivity.listView);
+
+        assertNotNull(cityListActivity.findViewById(R.id.cityList));
     }
 }
