@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 public class CityListActivity extends Activity {
+    public String listView;
+
     /**
      * Called when the activity is first created.
      */
@@ -12,4 +14,6 @@ public class CityListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
+
+
 }
