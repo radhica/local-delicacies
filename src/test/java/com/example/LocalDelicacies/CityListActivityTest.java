@@ -6,8 +6,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
-import java.awt.peer.RobotPeer;
-
 import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
@@ -37,6 +35,6 @@ public class CityListActivityTest {
 
     @Test
     public void shouldHaveCityAdapter() throws Exception{
-        assertNotNull(cityListActivity.getCityAdapter());
+        assertNotNull(cityListActivity.getListAdapter());
     }
 }

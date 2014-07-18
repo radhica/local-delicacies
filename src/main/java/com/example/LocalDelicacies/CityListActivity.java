@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class CityListActivity extends Activity {
     private ListView listView;
-    private CityAdapter cityAdapter;
+    private ListAdapter listAdapter;
+    private ArrayList<InventoryItem> items;
 
     /**
      * Called when the activity is first created.
@@ -17,10 +20,10 @@ public class CityListActivity extends Activity {
         setContentView(R.layout.city_list);
 
         listView = (ListView) findViewById(R.id.cityList);
-        cityAdapter = new CityAdapter();
+        listAdapter = new ListAdapter(this, items);
     }
 
-    public CityAdapter getCityAdapter() {
-        return cityAdapter;
+    public ListAdapter getListAdapter() {
+        return listAdapter;
     }
 }
