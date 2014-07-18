@@ -21,10 +21,13 @@
             android:textColor="@android:color/white"
             android:gravity="center"
             android:background="@color/text_background"/>
-    <Button
+    <ToggleButton
             android:id="@+id/base_item_symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            style="@style/toggleButton"
+            android:background="@drawable/ic_toggle_bg"/>
+
 </RelativeLayout>
