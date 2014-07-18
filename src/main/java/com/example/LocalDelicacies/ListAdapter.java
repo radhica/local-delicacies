@@ -1,7 +1,6 @@
 package com.example.LocalDelicacies;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,9 @@ import java.util.ArrayList;
  */
 public class ListAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<BaseItem> items;
+    private ArrayList<? extends BaseModel> items;
 
-    public ListAdapter(Context context, ArrayList<BaseItem> items) {
+    public ListAdapter(Context context, ArrayList<? extends BaseModel> items) {
         this.context = context;
         this.items = items;
     }
@@ -27,7 +26,7 @@ public class ListAdapter extends BaseAdapter {
     }
 
     @Override
-    public BaseItem getItem(int position) {
+    public BaseModel getItem(int position) {
         return items.get(position);
     }
 
@@ -65,16 +64,16 @@ public class ListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void configureImage(BaseItem baseItem, ViewHolder viewHolder) {
-        viewHolder.image.setImageResource(baseItem.getImageId());
+    private void configureImage(BaseModel baseModel, ViewHolder viewHolder) {
+        viewHolder.image.setImageResource(baseModel.getImageId());
     }
 
-    private void configureText(BaseItem baseItem, ViewHolder viewHolder) {
-        viewHolder.name.setText(baseItem.getName());
+    private void configureText(BaseModel baseModel, ViewHolder viewHolder) {
+        viewHolder.name.setText(baseModel.getName());
     }
 
-    private void configureSymbol(BaseItem baseItem, ViewHolder viewHolder) {
-        viewHolder.symbol.setChecked(baseItem.isChecked());
+    private void configureSymbol(BaseModel baseModel, ViewHolder viewHolder) {
+        viewHolder.symbol.setChecked(baseModel.isChecked());
     }
 
     public static class ViewHolder {

@@ -23,7 +23,7 @@ import static support.Assert.Assert.assertViewIsVisible;
 
 public class ListAdapterTest {
     private ListAdapter listAdapter;
-    private ArrayList<BaseItem> items;
+    private ArrayList<BaseModel> items;
 
     @Before
     public void setUp() throws Exception {
@@ -32,10 +32,10 @@ public class ListAdapterTest {
     }
 
     private void populateListOfItems() {
-        items = new ArrayList<BaseItem>();
-        items.add(new BaseItem("Gainesville","imageUrl1",1));
-        items.add(new BaseItem("Chicago","imageUrl2",2));
-        items.add(new BaseItem("Miami","imageurl3",3));
+        items = new ArrayList<BaseModel>();
+        items.add(new BaseModel("Gainesville","imageUrl1",1));
+        items.add(new BaseModel("Chicago","imageUrl2",2));
+        items.add(new BaseModel("Miami","imageurl3",3));
     }
 
     private CityListActivity startActivity() {
