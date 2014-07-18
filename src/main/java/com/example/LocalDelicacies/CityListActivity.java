@@ -2,7 +2,10 @@ package com.example.LocalDelicacies;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -44,4 +47,5 @@ public class CityListActivity extends Activity {
     public ListAdapter getListAdapter() {
         return listAdapter;
     }
+
 }

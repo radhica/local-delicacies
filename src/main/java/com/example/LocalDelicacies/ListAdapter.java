@@ -1,13 +1,11 @@
 package com.example.LocalDelicacies;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 
 import java.util.ArrayList;
 
@@ -39,7 +37,7 @@ public class ListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         final ViewHolder viewHolder;
 
@@ -51,6 +49,14 @@ public class ListAdapter extends BaseAdapter {
         else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.symbol.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                boolean on = ((ToggleButton) view).isChecked();
+                items.get(position).setChecked(on);
+            }
+        });
 
         configureImage(items.get(position), viewHolder);
         configureText(items.get(position), viewHolder);
@@ -68,19 +74,19 @@ public class ListAdapter extends BaseAdapter {
     }
 
     private void configureSymbol(BaseItem baseItem, ViewHolder viewHolder) {
-        //set drawable here
+        viewHolder.symbol.setChecked(baseItem.isChecked());
     }
 
     public static class ViewHolder {
         public TextView name;
         public ImageView image;
-        public Button symbol;
+        public ToggleButton symbol;
 
         public static ViewHolder createViewHolder(View view) {
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.name = (TextView) view.findViewById(R.id.base_item_name);
             viewHolder.image = (ImageView) view.findViewById(R.id.base_item_image);
-            viewHolder.symbol = (Button) view.findViewById(R.id.base_item_symbol);
+            viewHolder.symbol = (ToggleButton) view.findViewById(R.id.base_item_symbol);
             return viewHolder;
         }
 

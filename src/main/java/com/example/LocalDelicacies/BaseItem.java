@@ -6,6 +6,7 @@ package com.example.LocalDelicacies;
 public class BaseItem {
     private String name;
     private String imageUrl;
+    private boolean isChecked;
     private int id;
 
     public BaseItem(String name, String imageUrl, int id) {
@@ -28,5 +29,13 @@ public class BaseItem {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean isChecked) {
+        this.isChecked = isChecked;
     }
 }
