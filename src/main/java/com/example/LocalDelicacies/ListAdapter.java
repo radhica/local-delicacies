@@ -1,7 +1,7 @@
 package com.example.LocalDelicacies;
 
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,11 +15,11 @@ import java.util.ArrayList;
  * Created by bnegron on 7/17/14.
  */
 public class ListAdapter extends BaseAdapter {
-    private Activity activity;
+    private Context context;
     private ArrayList<BaseItem> items;
 
-    public ListAdapter(Activity activity, ArrayList<BaseItem> items) {
-        this.activity = activity;
+    public ListAdapter(Context context, ArrayList<BaseItem> items) {
+        this.context = context;
         this.items = items;
     }
 
@@ -40,7 +40,35 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        final ViewHolder viewHolder;
+
+        if(convertView == null){
+            convertView = inflater.inflate(R.id.base_item, parent, false);
+            viewHolder = ViewHolder.createViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        }
+        else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        configureImage(items.get(position), viewHolder);
+        configureText(items.get(position), viewHolder);
+        configureSymbol(items.get(position), viewHolder);
+
+        return convertView;
+    }
+
+    private void configureImage(BaseItem baseItem, ViewHolder viewHolder) {
+        viewHolder.image.setImageResource(baseItem.getImageId());
+    }
+
+    private void configureText(BaseItem baseItem, ViewHolder viewHolder) {
+        viewHolder.name.setText(baseItem.getName());
+    }
+
+    private void configureSymbol(BaseItem baseItem, ViewHolder viewHolder) {
+        //set drawable here
     }
 
     public static class ViewHolder {

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import static com.example.LocalDelicacies.ListAdapter.ViewHolder.createViewHolder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static support.Assert.Assert.assertViewIsVisible;
 
 /**
@@ -82,6 +83,40 @@ public class ListAdapterTest {
     public void getView_shouldReturnView() throws Exception {
         for(int index = 0; index < items.size(); index++) {
             assertNotNull(getViewAtIndex(index));
+        }
+    }
+
+    @Test
+    public void getView_viewReturnedShouldHaveName() throws Exception{
+        for(int index = 0; index < items.size(); index++){
+            View view = getViewAtIndex(index);
+            assertViewIsVisible(view.findViewById(R.id.base_item_name));
+        }
+    }
+
+    @Test
+    public void getView_viewReturnedShouldHaveImage() throws Exception{
+        for(int index = 0; index < items.size(); index++){
+            View view = getViewAtIndex(index);
+            assertViewIsVisible(view.findViewById(R.id.base_item_image));
+        }
+    }
+
+    @Test
+    public void getView_viewReturnedShouldHaveSymbol() throws Exception{
+        for(int index = 0; index < items.size(); index++){
+            View view = getViewAtIndex(index);
+            assertViewIsVisible(view.findViewById(R.id.base_item_symbol));
+        }
+    }
+
+    @Test
+    public void shouldRecycleViews() throws Exception{
+        for(int index = 0; index < items.size(); index++){
+            View recycleView = getRecycleView();
+            View listItemView = listAdapter.getView(index,recycleView,null);
+
+            assertSame(recycleView, listItemView);
         }
     }
 }
