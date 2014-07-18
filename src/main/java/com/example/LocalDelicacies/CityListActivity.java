@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class CityListActivity extends Activity {
     private ListView listView;
     private ListAdapter listAdapter;
-    private ArrayList<InventoryItem> items;
+    private ArrayList<BaseItem> items;
 
     /**
      * Called when the activity is first created.
