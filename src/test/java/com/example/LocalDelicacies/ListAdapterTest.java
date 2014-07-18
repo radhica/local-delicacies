@@ -61,7 +61,7 @@ public class ListAdapterTest {
     @Test
     public void getItemId_shouldReturnProperId(){
         for(int index = 0; index < items.size(); index++)
-            assertEquals(listAdapter.getItemId(index),index);
+            assertEquals(listAdapter.getItemId(index), items.get(index).getId());
     }
 
 }
