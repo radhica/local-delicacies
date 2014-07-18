@@ -1,9 +1,13 @@
 package com.example.LocalDelicacies;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -37,5 +41,20 @@ public class ListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         return null;
+    }
+
+    public static class ViewHolder {
+        public TextView name;
+        public ImageView image;
+        public Button symbol;
+
+        public static ViewHolder createViewHolder(View view) {
+            ViewHolder viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) view.findViewById(R.id.base_item_name);
+            viewHolder.image = (ImageView) view.findViewById(R.id.base_item_image);
+            viewHolder.symbol = (Button) view.findViewById(R.id.base_item_symbol);
+            return viewHolder;
+        }
+
     }
 }

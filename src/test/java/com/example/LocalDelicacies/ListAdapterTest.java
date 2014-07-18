@@ -1,5 +1,6 @@
 package com.example.LocalDelicacies;
 
+import android.view.View;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,8 +9,10 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import static com.example.LocalDelicacies.ListAdapter.ViewHolder.createViewHolder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static support.Assert.Assert.assertViewIsVisible;
 
 /**
  * Created by mlandaverde on 7/17/14.
@@ -42,6 +45,17 @@ public class ListAdapterTest {
                 .get();
     }
 
+    private View getViewAtIndex(int index) {
+        return listAdapter.getView(index, getRecycleView(), null);
+    }
+
+    private View getRecycleView() {
+        View recycleView = View.inflate(startActivity(), R.layout.base_item, null);
+        ListAdapter.ViewHolder viewHolder = createViewHolder(recycleView);
+        recycleView.setTag(viewHolder);
+        return recycleView;
+    }
+
     @Test
     public void shouldNotBeNull() throws Exception {
         assertNotNull(listAdapter);
@@ -53,15 +67,21 @@ public class ListAdapterTest {
     }
 
     @Test
-    public void getItem_shouldReturnProperItem(){
+    public void getItem_shouldReturnProperItem() throws Exception {
         for(int index = 0; index < items.size(); index++)
             assertEquals(listAdapter.getItem(0),items.get(0));
     }
 
     @Test
-    public void getItemId_shouldReturnProperId(){
+    public void getItemId_shouldReturnProperId() throws Exception {
         for(int index = 0; index < items.size(); index++)
             assertEquals(listAdapter.getItemId(index), items.get(index).getId());
     }
 
+    @Test
+    public void getView_shouldReturnView() throws Exception {
+        for(int index = 0; index < items.size(); index++) {
+            assertNotNull(getViewAtIndex(index));
+        }
+    }
 }
