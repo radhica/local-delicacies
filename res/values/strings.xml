@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Local Delicacies</string>
+    <string name="nav_1">Locations</string>
+    <string name="nav_2">Delicacies</string>
+    <string name="drawer_open">Open menu</string>
+    <string name="drawer_close">Close menu</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="titles">
-        <item>Locations</item>
-        <item>Delicacies</item>
+        <item>@string/nav_1</item>
+        <item>@string/nav_2</item>
     </string-array>
 </resources>
