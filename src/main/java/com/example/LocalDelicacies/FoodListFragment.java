@@ -2,7 +2,7 @@ package com.example.LocalDelicacies;
 
 import java.util.ArrayList;
 
-public class FoodListActivity extends ListActivity {
+public class FoodListFragment extends ListFragment {
     @Override
     public void populateModels(ArrayList<BaseModel> items) {
         items.add(new FoodModel("Tacos","imageUrl1",1));

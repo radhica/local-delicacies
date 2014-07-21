@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by mlandaverde on 7/21/14.
  */
-public class CityListActivity extends ListActivity {
+public class CityListFragment extends ListFragment {
 
     @Override
     public void populateModels(ArrayList<BaseModel> items) {

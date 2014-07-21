@@ -1,5 +1,6 @@
 package com.example.LocalDelicacies;
 
+import android.app.Activity;
 import android.view.View;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import static com.example.LocalDelicacies.ListAdapter.ViewHolder.createViewHolder;
 import static org.junit.Assert.*;
 import static support.Assert.Assert.assertViewIsVisible;
+import static support.Assert.FragmentUtil.startFragment;
 
 /**
  * Created by mlandaverde on 7/17/14.
@@ -37,12 +39,10 @@ public class ListAdapterTest {
         items.add(new BaseModel("Item4","imageurl4",4));
     }
 
-    private CityListActivity startActivity() {
-        return Robolectric.buildActivity(CityListActivity.class)
-                .create()
-                .start()
-                .resume()
-                .get();
+    private Activity startActivity() {
+        ListFragment listFragment = new ListFragment();
+        startFragment(listFragment);
+        return listFragment.getActivity();
     }
 
     private View getViewAtIndex(int index) {
