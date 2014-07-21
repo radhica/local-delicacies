@@ -9,12 +9,13 @@ import org.robolectric.RobolectricTestRunner;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
-public class FoodListActivityTest {
-    private FoodListActivity foodListActivity;
+
+public class ListActivityTest {
+    private ListActivity listActivity;
 
     @Before
     public void setUp() {
-        foodListActivity = Robolectric.buildActivity(FoodListActivity.class)
+        listActivity = Robolectric.buildActivity(ListActivity.class)
                             .create()
                             .start()
                             .resume()
@@ -23,17 +24,16 @@ public class FoodListActivityTest {
 
     @Test
     public void shouldNotBeNull() throws Exception {
-        assertNotNull(foodListActivity);
+        assertNotNull(listActivity);
     }
 
     @Test
     public void shouldHaveListView() throws Exception {
-
-        assertNotNull(foodListActivity.findViewById(R.id.foodList));
+        assertNotNull(listActivity.findViewById(R.id.content_list));
     }
 
     @Test
     public void shouldHaveCityAdapter() throws Exception{
-        assertNotNull(foodListActivity.getListAdapter());
+        assertNotNull(listActivity.getListAdapter());
     }
 }
