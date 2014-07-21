@@ -10,9 +10,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 
 import static com.example.LocalDelicacies.ListAdapter.ViewHolder.createViewHolder;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static support.Assert.Assert.assertViewIsVisible;
 
 /**
@@ -33,9 +31,10 @@ public class ListAdapterTest {
 
     private void populateListOfItems() {
         items = new ArrayList<BaseModel>();
-        items.add(new BaseModel("Gainesville","imageUrl1",1));
-        items.add(new BaseModel("Chicago","imageUrl2",2));
-        items.add(new BaseModel("Miami","imageurl3",3));
+        items.add(new BaseModel("Item1","imageUrl1",1));
+        items.add(new BaseModel("Item2","imageUrl2",2));
+        items.add(new BaseModel("Item3","imageurl3",3));
+        items.add(new BaseModel("Item4","imageurl4",4));
     }
 
     private CityListActivity startActivity() {

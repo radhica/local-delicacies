@@ -1,9 +1,5 @@
 package com.example.LocalDelicacies;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.ListView;
-
 import java.util.ArrayList;
 
 public class FoodListActivity extends ListActivity {

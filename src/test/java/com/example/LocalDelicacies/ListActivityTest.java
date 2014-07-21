@@ -33,7 +33,7 @@ public class ListActivityTest {
     }
 
     @Test
-    public void shouldHaveCityAdapter() throws Exception{
+    public void shouldHaveAdapter() throws Exception{
         assertNotNull(listActivity.getListAdapter());
     }
 }
