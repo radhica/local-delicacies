@@ -30,6 +30,6 @@ public class MainActivityTest {
 
     @Test
     public void shouldHaveNavDrawer(){
-        assertNotNull(mainActivity.findViewById(R.id.drawer_layout));
+        assertNotNull(mainActivity.getFragmentManager().findFragmentById(R.id.navdrawer_fragment));
     }
 }

@@ -9,15 +9,12 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-    <!-- The navigation drawer -->
-    <ListView android:id="@+id/left_drawer"
-              android:layout_width="@dimen/drawer_width"
-              android:layout_height="match_parent"
-              android:layout_gravity="start"
-              android:choiceMode="singleChoice"
-              android:divider="@android:color/transparent"
-              android:dividerHeight="@dimen/divider_height"
-              android:background="#111"/>
+    <!--The navigation drawer-->
+    <fragment
+            android:id="@+id/navdrawer_fragment"
+            android:name="com.example.LocalDelicacies.NavDrawerFragment"
+            android:layout_gravity="start"
+            android:layout_width="@dimen/drawer_width"
+            android:layout_height="match_parent" />
 </android.support.v4.widget.DrawerLayout>
 
