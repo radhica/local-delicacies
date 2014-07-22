@@ -10,10 +10,16 @@
     <include layout="@layout/base_item" />
 
     <!--Detail View Rating-->
-    <TextView
-            android:id="@+id/detail_rating"
+    <RatingBar
+            android:id="@+id/locale_rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/base_item_image"
+            android:numStars="5"
+            android:rating="1"
+            android:stepSize="1"
+            android:layout_centerHorizontal="true"
+            android:longClickable="false"
             android:visibility="gone"/>
 
     <!--Detail View Description-->
@@ -21,7 +27,7 @@
             android:id="@+id/detail_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/base_item_image"
+            android:layout_below="@id/locale_rating_bar"
             android:gravity="center_horizontal"/>
 
 </RelativeLayout>
