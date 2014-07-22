@@ -29,7 +29,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void shouldHaveNavDrawer(){
+    public void shouldHaveNavDrawerFragment(){
         assertNotNull(mainActivity.getFragmentManager().findFragmentById(R.id.navdrawer_fragment));
     }
 }
