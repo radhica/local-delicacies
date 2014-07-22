@@ -35,10 +35,10 @@ public class DetailActivity extends Activity{
     private void populateDetails() {
         BaseModel detailItem = this.items.get(itemId);
 
-        TextView detailName = (TextView) findViewById(R.id.detail_name);
+        TextView detailName = (TextView) findViewById(R.id.base_item_name);
         detailName.setText(detailItem.getName());
 
-        ImageView detailImage = (ImageView) findViewById(R.id.detail_image);
+        ImageView detailImage = (ImageView) findViewById(R.id.base_item_image);
         detailImage.setImageResource(detailItem.getImageId());
 
         TextView detailDesc = (TextView) findViewById(R.id.detail_description);

@@ -49,7 +49,7 @@ public class ListAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
 
         if(convertView == null){
-            convertView = inflater.inflate(R.layout.base_item, parent, false);
+            convertView = inflater.inflate(R.layout.list_item, parent, false);
             viewHolder = ViewHolder.createViewHolder(convertView);
             convertView.setTag(viewHolder);
         }

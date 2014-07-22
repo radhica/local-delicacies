@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/base_item"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants">
 
-    <!--Detail View Image-->
-    <ImageView
-            android:id="@+id/detail_image"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/image_height"/>
-
-    <!--Detail View Name-->
-    <TextView
-            android:id="@+id/detail_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+    <include layout="@layout/base_item" />
 
     <!--Detail View Rating-->
     <TextView
@@ -28,16 +20,8 @@
     <TextView
             android:id="@+id/detail_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    <!--Detail View ToggleButton-->
-    <ToggleButton
-            android:id="@id/base_item_symbol"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            style="@style/toggleButton"
-            android:background="@drawable/ic_toggle_bg"/>
+            android:layout_below="@+id/base_item_image"
+            android:gravity="center_horizontal"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/base_item"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:descendantFocusability="blocksDescendants">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--List View Image-->
     <ImageView
@@ -22,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/text_padding"
             android:paddingTop="@dimen/text_padding"
-            android:layout_alignParentBottom="true"
+            android:layout_alignBottom="@id/base_item_image"
             android:textColor="@android:color/white"
             android:gravity="center"
             android:background="@color/text_background"/>
@@ -37,4 +32,5 @@
             style="@style/toggleButton"
             android:background="@drawable/ic_toggle_bg"/>
 
-</RelativeLayout>
+</merge>
+
