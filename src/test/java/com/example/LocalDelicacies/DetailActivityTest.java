@@ -23,10 +23,13 @@ public class DetailActivityTest {
     @Before
     public void setUp() throws Exception {
         intent = new Intent();
-        extras = new Bundle();
 
-        extras.putSerializable("Test", "test");
-        intent.putExtras(extras);
+        ArrayList<BaseModel> items = new ArrayList<BaseModel>();
+
+        items.add(new FoodModel("name", "iamge", 0, "asdfas"));
+
+        intent.putExtra("items", items);
+        intent.putExtra("itemId", 0);
 
         detailActivity = Robolectric.buildActivity(DetailActivity.class)
                 .withIntent(intent)
