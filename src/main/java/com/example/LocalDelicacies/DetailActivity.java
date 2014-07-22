@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,24 +18,27 @@ import java.util.ArrayList;
 public class DetailActivity extends Activity{
 
     private ArrayList<BaseModel> items = new ArrayList<BaseModel>();
+    private BaseModel detailItem;
     private int itemId;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
 
+        ratingBar = (RatingBar) findViewById(R.id.locale_rating_bar);
         Bundle detailInfo = getIntent().getExtras();
         this.items = (ArrayList<BaseModel>) detailInfo.getSerializable("items");
         this.itemId = detailInfo.getInt("itemId");
+        detailItem = this.items.get(itemId);
+        toggleRatingBarView();
 
         if(items != null)
             populateDetails();
     }
 
     private void populateDetails() {
-        BaseModel detailItem = this.items.get(itemId);
-
         TextView detailName = (TextView) findViewById(R.id.base_item_name);
         detailName.setText(detailItem.getName());
 
@@ -60,6 +64,14 @@ public class DetailActivity extends Activity{
             View rootView = inflater.inflate(R.layout.base_item,
                     container, false);
             return rootView;
+        }
+    }
+
+    private void toggleRatingBarView() {
+        if (detailItem instanceof FoodModel) {
+            ratingBar.setVisibility(View.VISIBLE);
+        } else {
+            ratingBar.setVisibility(View.GONE);
         }
     }
 }
