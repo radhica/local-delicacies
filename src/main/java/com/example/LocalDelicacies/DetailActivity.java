@@ -36,6 +36,8 @@ public class DetailActivity extends Activity{
 
         if(items != null)
             populateDetails();
+
+        getActionBar().setDisplayShowHomeEnabled(false);
     }
 
     private void populateDetails() {
