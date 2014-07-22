@@ -94,24 +94,25 @@ public class MainActivity extends Activity {
     }
 
     @Subscribe
-    public void onCityEvent(CityEvent cityEvent){
+    private void onCityEvent(CityEvent cityEvent){
         select(0);
     }
 
     @Subscribe
-    public void onFoodEvent(FoodEvent foodEvent){
+    private void onFoodEvent(FoodEvent foodEvent){
         select(1);
     }
 
+    @Override
     public void setTitle(CharSequence title) {
         getActionBar().setTitle(title);
     }
 
-    protected static Bus getBus() {
+    private static Bus getBus() {
         return AppBus.getInstance().getBus();
     }
 
-    public static void postToBus(BaseEvent event){
+    private static void postToBus(BaseEvent event){
         AppBus.getInstance().postToBus(event);
     }
 
