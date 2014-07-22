@@ -1,12 +1,16 @@
 package com.example.LocalDelicacies;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -41,5 +45,10 @@ public class DetailActivityTest {
     public void shouldHaveIntent() throws Exception {
         assertEquals(detailActivity.getIntent(),
                 intent);
+    }
+
+    @Test
+    public void shouldHaveDescriptionTextView() throws Exception {
+        assertNotNull(detailActivity.findViewById(R.id.detail_description));
     }
 }

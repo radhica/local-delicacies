@@ -50,7 +50,7 @@ public class ListAdapterTest {
     }
 
     private View getRecycleView() {
-        View recycleView = View.inflate(startActivity(), R.layout.base_item, null);
+        View recycleView = View.inflate(startActivity(), R.layout.list_item, null);
         ListAdapter.ViewHolder viewHolder = createViewHolder(recycleView);
         recycleView.setTag(viewHolder);
         return recycleView;

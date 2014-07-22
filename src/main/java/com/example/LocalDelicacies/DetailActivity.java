@@ -31,7 +31,7 @@ public class DetailActivity extends Activity{
         Bundle detailInfo = getIntent().getExtras();
         this.items = (ArrayList<BaseModel>) detailInfo.getSerializable("items");
         this.itemId = detailInfo.getInt("itemId");
-        detailItem = this.items.get(itemId);
+        detailItem = items.get(itemId);
         toggleRatingBarView();
 
         if(items != null)
