@@ -33,10 +33,10 @@ public class ListAdapterTest {
 
     private void populateListOfItems() {
         items = new ArrayList<BaseModel>();
-        items.add(new BaseModel("Item1","imageUrl1",1));
-        items.add(new BaseModel("Item2","imageUrl2",2));
-        items.add(new BaseModel("Item3","imageurl3",3));
-        items.add(new BaseModel("Item4","imageurl4",4));
+        items.add(new BaseModel("Item0","imageUrl0",0,""));
+        items.add(new BaseModel("Item1","imageUrl1",1,""));
+        items.add(new BaseModel("Item2","imageurl2",2,""));
+        items.add(new BaseModel("Item3","imageurl3",3,""));
     }
 
     private Activity startActivity() {

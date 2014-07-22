@@ -3,6 +3,7 @@ package com.example.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -11,13 +12,12 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import events.BaseEvent;
 import events.CityEvent;
 import events.FoodEvent;
+import events.ItemSelectedEvent;
 
 /**
  * Created by bnegron on 7/21/14.
@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         registerWithBus();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
         titles = getResources().getStringArray(R.array.titles);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -61,6 +61,10 @@ public class MainActivity extends Activity {
         getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+
+        getFragmentManager().beginTransaction().replace(R.id.content_frame,
+                                                        new CityListFragment(),
+                                                        CITY_LIST).commit();
     }
 
     private void select(final int position) {
@@ -94,12 +98,12 @@ public class MainActivity extends Activity {
     }
 
     @Subscribe
-    private void onCityEvent(CityEvent cityEvent){
+    public void onCityEvent(CityEvent cityEvent){
         select(0);
     }
 
     @Subscribe
-    private void onFoodEvent(FoodEvent foodEvent){
+    public void onFoodEvent(FoodEvent foodEvent){
         select(1);
     }
 
@@ -108,16 +112,8 @@ public class MainActivity extends Activity {
         getActionBar().setTitle(title);
     }
 
-    private static Bus getBus() {
-        return AppBus.getInstance().getBus();
-    }
-
-    private static void postToBus(BaseEvent event){
-        AppBus.getInstance().postToBus(event);
-    }
-
     private void registerWithBus() {
-        getBus().register(this);
+        AppBus.getInstance().getBus().register(this);
     }
 
     @Override
@@ -127,7 +123,7 @@ public class MainActivity extends Activity {
     }
 
     private void unregisterWithBus() {
-        getBus().unregister(this);
+        AppBus.getInstance().getBus().unregister(this);
     }
 
     @Override

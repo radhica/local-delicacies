@@ -8,8 +8,8 @@ public class CityModel extends BaseModel {
     private long longitude;
 
     // Only for local testing purposes
-    public CityModel(String name, String imageUrl, int id) {
-        super(name, imageUrl, id);
+    public CityModel(String name, String imageUrl, int id, String description) {
+        super(name, imageUrl, id, description);
     }
 
     public CityModel(String name, String imageUrl, int id, boolean isChecked, String description, long latitude, long longitude) {

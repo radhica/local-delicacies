@@ -6,8 +6,8 @@ package com.example.LocalDelicacies;
 public class FoodModel extends BaseModel {
     private int rating;
 
-    public FoodModel(String name, String imageUrl, int id){
-        super(name, imageUrl,id);
+    public FoodModel(String name, String imageUrl, int id, String description){
+        super(name, imageUrl,id, description);
     }
 
     public FoodModel(String name, String imageUrl, int id, boolean isChecked, String description, int rating) {

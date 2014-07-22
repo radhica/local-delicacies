@@ -12,8 +12,6 @@ import events.BaseEvent;
 import events.CityEvent;
 import events.FoodEvent;
 
-import static com.example.LocalDelicacies.MainActivity.postToBus;
-
 /**
  * Created by mlandaverde on 7/21/14.
  */
@@ -24,11 +22,12 @@ public class NavDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        layout = inflater.inflate(R.layout.navdrawer, container, false);
+        layout = inflater.inflate(R.layout.nav_drawer, container, false);
 
         drawerList = (ListView) layout.findViewById(R.id.left_drawer);
 
-        drawerList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.drawer_list_item, getResources().getStringArray(R.array.titles)));
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.drawer_list_item, getResources().getStringArray(R.array.titles));
+        drawerList.setAdapter(arrayAdapter);
         drawerList.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -42,13 +41,13 @@ public class NavDrawerFragment extends Fragment {
     private void selectItem(int position) {
         switch (position){
             case 0:
-                postToBus(new CityEvent());
+                AppBus.getInstance().postToBus(new CityEvent());
                 break;
             case 1:
-                postToBus(new FoodEvent());
+                AppBus.getInstance().postToBus(new FoodEvent());
                 break;
             default:
-                postToBus(new BaseEvent());
+                AppBus.getInstance().postToBus(new BaseEvent());
                 break;
         }
     }
