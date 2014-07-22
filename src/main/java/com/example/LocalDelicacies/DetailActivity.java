@@ -42,7 +42,7 @@ public class DetailActivity extends Activity{
         detailImage.setImageResource(detailItem.getImageId());
 
         TextView detailDesc = (TextView) findViewById(R.id.detail_description);
-        detailDesc.setText(detailItem.getName());
+        detailDesc.setText(detailItem.getDescription());
     }
 
     @Override
