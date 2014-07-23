@@ -3,6 +3,7 @@ package com.example.LocalDelicacies;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,12 @@ import java.util.ArrayList;
  * Created by mlandaverde on 7/18/14.
  */
 public class ListFragment extends Fragment {
+    private ViewPagerAdapter viewPagerAdapter;
     private ListView listView;
     private View layout;
     private ListAdapter listAdapter;
     private ArrayList<BaseModel> items = new ArrayList<BaseModel>();
+    private ArrayList<View> pages = new ArrayList<View>();
 
     /**
      * Called when the activity is first created.
@@ -29,7 +32,7 @@ public class ListFragment extends Fragment {
 
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
 
-        listView = (ListView) layout.findViewById(R.id.content_list);
+        listView = new ListView(layout.getContext());
         listAdapter = new ListAdapter(getActivity(), items);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
@@ -41,6 +44,17 @@ public class ListFragment extends Fragment {
                 startActivity(detailView);
             }
         });
+
+//        class PageListener extends ViewPager.SimpleOnPageChangeListener{
+//            public void onPageSelected(int position){
+//                currentPage = position;
+//            }
+//        }
+
+        pages.add(listView);
+        ViewPager viewPager = (ViewPager) layout.findViewById(R.id.view_pager);
+        viewPagerAdapter = new ViewPagerAdapter(pages);
+        viewPager.setAdapter(viewPagerAdapter);
 
         return layout;
     }
