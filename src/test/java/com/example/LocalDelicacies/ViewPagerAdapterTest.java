@@ -2,21 +2,33 @@ package com.example.LocalDelicacies;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.LinearLayout;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static support.Assert.FragmentUtil.startFragment;
 
 @RunWith(RobolectricTestRunner.class)
 public class ViewPagerAdapterTest {
-    View view;
+    ArrayList<View> testPages;
+    private ViewPagerAdapter viewPagerAdapter;
+    private LinearLayout linearLayout;
 
     @Before
     public void setUp() throws Exception {
-        view = View.inflate(startActivity(),R.layout.list_fragment_layout,null);
+        linearLayout = new LinearLayout(Robolectric.application.getApplicationContext());
+        testPages = new ArrayList<View>();
+        testPages.add(new View(Robolectric.application.getApplicationContext()));
+        testPages.add(new View(Robolectric.application.getApplicationContext()));
+        testPages.add(new View(Robolectric.application.getApplicationContext()));
+        viewPagerAdapter = new ViewPagerAdapter(testPages);
     }
 
     private Activity startActivity() {
@@ -26,28 +38,27 @@ public class ViewPagerAdapterTest {
     }
 
     @Test
-    public void viewShouldNotBeNull(){
-        assertNotNull(view);
+    public void shouldNotBeNull(){
+        assertNotNull(viewPagerAdapter);
 
     }
 
     @Test
-    public void testInstantiateItem() throws Exception {
-
+    public void instantiateItem_shouldAddViews() throws Exception {
+        assertNotNull(linearLayout);
+        viewPagerAdapter.instantiateItem(linearLayout,0);
+        assertEquals(linearLayout.getChildAt(0), testPages.get(0));
     }
 
     @Test
-    public void testDestroyItem() throws Exception {
-
+    public void destroyItem_shouldRemoveViews() throws Exception {
+        viewPagerAdapter.destroyItem(linearLayout,0,testPages.get(0));
+        assertEquals(linearLayout.getChildCount(), 0);
     }
 
     @Test
-    public void testGetCount() throws Exception {
-
+    public void getCount_shouldReturnAccurateCount() throws Exception {
+        assertEquals(viewPagerAdapter.getCount(),3);
     }
 
-    @Test
-    public void testIsViewFromObject() throws Exception {
-
-    }
 }

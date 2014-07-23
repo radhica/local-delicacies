@@ -23,7 +23,8 @@ public class ViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, Object object)
+    {
         container.removeView((View) object);
     }
 
