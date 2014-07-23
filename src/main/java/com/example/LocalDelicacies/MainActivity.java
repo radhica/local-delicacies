@@ -28,6 +28,8 @@ public class MainActivity extends Activity {
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private String[] titles;
+    private String lastActionBarTitle;
+    private boolean shouldGoInvisible;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,13 +48,19 @@ public class MainActivity extends Activity {
 
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                getActionBar().setTitle(lastActionBarTitle);
+                shouldGoInvisible = false;
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View view) {
                 super.onDrawerOpened(view);
-                getActionBar().setTitle(R.string.app_name);
-                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                lastActionBarTitle = getActionBar().getTitle().toString();
+                getActionBar().setTitle(R.string.menu_name);
+                shouldGoInvisible = true;
+
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
 
@@ -97,6 +105,19 @@ public class MainActivity extends Activity {
         setTitle(titles[position]);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        boolean drawerOpen = shouldGoInvisible;
+        hideMenuItems(menu, !shouldGoInvisible);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void hideMenuItems(Menu menu, boolean visible) {
+        for(int i = 0; i < menu.size(); i++){
+            menu.getItem(i).setVisible(visible);
+        }
+    }
+
     @Subscribe
     public void onCityEvent(CityEvent cityEvent){
         select(0);
@@ -109,6 +130,7 @@ public class MainActivity extends Activity {
 
     @Override
     public void setTitle(CharSequence title) {
+        lastActionBarTitle = title.toString();
         getActionBar().setTitle(title);
     }
 
@@ -144,12 +166,5 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        //boolean drawerOpen = drawerLayout.isDrawerOpen((ListView) findViewById(R.id.left_drawer));
-        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
     }
 }

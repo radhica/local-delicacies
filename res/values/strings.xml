@@ -6,4 +6,5 @@
     <string name="drawer_open">Open menu</string>
     <string name="drawer_close">Close menu</string>
     <string name="detail_view">Details</string>
+    <string name="menu_name">Menu</string>
 </resources>

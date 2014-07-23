@@ -28,9 +28,4 @@ public class ListFragmentTest {
     public void shouldHaveListView() throws Exception {
 //        assertNotNull(listFragment.getView().findViewById(R.id.content_list));
     }
-
-    @Test
-    public void shouldHaveAdapter() throws Exception{
-        assertNotNull(listFragment.getListAdapter());
-    }
 }
