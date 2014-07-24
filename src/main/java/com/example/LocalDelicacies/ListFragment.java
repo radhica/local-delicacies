@@ -58,7 +58,6 @@ public class ListFragment extends Fragment {
         for(BaseModel i : items){
             if(i.isChecked())
                 pinnedItems.add(i);
-            Log.d("Entered looped for pinned items; item is: ", String.valueOf(i.isChecked()));
         }
     }
 
