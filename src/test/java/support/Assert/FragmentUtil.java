@@ -9,7 +9,7 @@ import org.robolectric.Robolectric;
  * Created by mlandaverde on 7/14/14.
  */
 public class FragmentUtil {
-    public static void startFragment( Fragment fragment )
+    public static Activity startFragment( Fragment fragment )
     {
         Activity activity = createActivity();
 
@@ -17,6 +17,8 @@ public class FragmentUtil {
         fragmentManager.beginTransaction()
                 .add( fragment, null )
                 .commit();
+
+        return activity;
     }
 
     private static Activity createActivity() {

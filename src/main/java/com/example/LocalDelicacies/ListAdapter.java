@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import com.squareup.picasso.Picasso;
 import events.ItemSelectedEvent;
 
 import java.util.ArrayList;
@@ -72,8 +73,17 @@ public class ListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void configureImage(BaseModel baseModel, ViewHolder viewHolder) {
-        viewHolder.image.setImageResource(baseModel.getImageId());
+    //public for testing
+    public void configureImage(BaseModel baseModel, ViewHolder viewHolder) {
+        int imageId = context.getResources().getIdentifier(baseModel.getImageUrl(),"drawable",context.getPackageName());
+
+        Picasso.with(context)
+               .load(imageId)
+               .placeholder(R.drawable.placeholder)
+               .centerCrop()
+               .resizeDimen(R.dimen.image_width,R.dimen.image_height)
+               .into(viewHolder.image);
+
     }
 
     private void configureText(BaseModel baseModel, ViewHolder viewHolder) {

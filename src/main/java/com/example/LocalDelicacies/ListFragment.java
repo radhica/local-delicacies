@@ -42,7 +42,8 @@ public class ListFragment extends Fragment {
     }
 
     private void populateListViews() {
-        items = populateModels();
+        if(items == null)
+            items = populateModels();
 
         ListView listView = createListView(items);
         pages.add(listView);

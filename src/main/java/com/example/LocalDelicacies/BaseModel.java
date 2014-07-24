@@ -43,7 +43,7 @@ public class BaseModel implements Serializable{
     }
 
     public int getImageId(){
-        return R.drawable.gville;
+        return R.drawable.placeholder;
     }
 
     public int getId() {

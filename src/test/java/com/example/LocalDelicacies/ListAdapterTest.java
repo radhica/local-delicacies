@@ -33,14 +33,12 @@ public class ListAdapterTest {
 
     private void populateListOfItems() {
         items = new ArrayList<BaseModel>();
-        items.add(new BaseModel("Item0","imageUrl0",0,""));
-        items.add(new BaseModel("Item1","imageUrl1",1,""));
-        items.add(new BaseModel("Item2","imageurl2",2,""));
-        items.add(new BaseModel("Item3","imageurl3",3,""));
+        items.add(new CityModel("Item0","placeholder",0,""));
+        items.add(new CityModel("Item1","placeholder",1,""));
     }
 
     private Activity startActivity() {
-        ListFragment listFragment = new ListFragment();
+        CityListFragment listFragment = new CityListFragment();
         startFragment(listFragment);
         return listFragment.getActivity();
     }

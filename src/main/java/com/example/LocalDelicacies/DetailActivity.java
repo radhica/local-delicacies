@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,13 @@ public class DetailActivity extends Activity{
         detailName.setText(detailItem.getName());
 
         ImageView detailImage = (ImageView) findViewById(R.id.base_item_image);
-        detailImage.setImageResource(detailItem.getImageId());
+        int imageId = getResources().getIdentifier(detailItem.getImageUrl(),"drawable",getPackageName());
+        Picasso.with(this)
+                .load(imageId)
+                .placeholder(R.drawable.placeholder)
+                .centerCrop()
+                .resizeDimen(R.dimen.image_width,R.dimen.image_height)
+                .into(detailImage);
 
         TextView detailDesc = (TextView) findViewById(R.id.detail_description);
         detailDesc.setText(detailItem.getDescription());

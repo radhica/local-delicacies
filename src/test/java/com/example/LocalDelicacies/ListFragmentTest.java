@@ -15,7 +15,7 @@ public class ListFragmentTest {
 
     @Before
     public void setUp() {
-        listFragment = new ListFragment();
+        listFragment = new CityListFragment();
         startFragment(listFragment);
     }
 
@@ -26,6 +26,6 @@ public class ListFragmentTest {
 
     @Test
     public void shouldHaveListView() throws Exception {
-//        assertNotNull(listFragment.getView().findViewById(R.id.content_list));
+        assertNotNull(listFragment.getView());
     }
 }
