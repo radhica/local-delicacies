@@ -46,9 +46,15 @@ public class DetailActivity extends Activity{
         detailName.setText(detailItem.getName());
 
         ImageView detailImage = (ImageView) findViewById(R.id.base_item_image);
-        int imageId = getResources().getIdentifier(detailItem.getImageUrl(),"drawable",getPackageName());
+        String url = "";
+        String modelType = ((Object) detailItem).getClass().getSimpleName();
+        if(modelType.equals("CityModel"))
+            url = "http://i.imgur.com/16MFwqc.jpg";
+        else
+            url = "http://i.imgur.com/E2QXn3B.jpg";
+
         Picasso.with(this)
-                .load(imageId)
+                .load(url)
                 .placeholder(R.drawable.placeholder)
                 .centerCrop()
                 .resizeDimen(R.dimen.image_width,R.dimen.image_height)

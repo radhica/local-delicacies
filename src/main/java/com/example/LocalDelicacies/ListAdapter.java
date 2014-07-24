@@ -3,6 +3,7 @@ package com.example.LocalDelicacies;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,13 +76,19 @@ public class ListAdapter extends BaseAdapter {
 
     //public for testing
     public void configureImage(BaseModel baseModel, ViewHolder viewHolder) {
-        int imageId = context.getResources().getIdentifier(baseModel.getImageUrl(),"drawable",context.getPackageName());
+        String url = "";
+        String modelType = ((Object) baseModel).getClass().getSimpleName();
+
+        if(modelType.equals("CityModel"))
+            url = "http://i.imgur.com/16MFwqc.jpg";
+        else
+            url = "http://i.imgur.com/E2QXn3B.jpg";
 
         Picasso.with(context)
-               .load(imageId)
+               .load(url)
                .placeholder(R.drawable.placeholder)
-               .centerCrop()
                .resizeDimen(R.dimen.image_width,R.dimen.image_height)
+               .centerCrop()
                .into(viewHolder.image);
 
     }
