@@ -1,11 +1,11 @@
 
 package com.example.LocalDelicacies;
 
+import javax.annotation.Generated;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
 public class LocationList {

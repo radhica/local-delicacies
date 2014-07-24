@@ -11,25 +11,31 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import com.google.gson.Gson;
 import com.squareup.otto.Subscribe;
-import events.CityEvent;
-import events.FoodEvent;
+import events.DelicacyEvent;
+import events.DownloadEvent;
+import events.LocationEvent;
+import events.LocationListEvent;
 
 /**
  * Created by bnegron on 7/21/14.
  */
 public class MainActivity extends Activity {
-    private static final String CITY_LIST = "City List";
-    private static final String FOOD_LIST = "Food List";
+    private static final String LOCATION_LIST = "Location List";
+    private static final String DELICACY_LIST = "Delicacy List";
+    private String[] titles;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
-    private String[] titles;
     private String lastActionBarTitle;
     private boolean shouldGoInvisible;
+    private LocationList locationList;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         registerWithBus();
+        //new DownloadFileTask(this).execute(getString(R.string.json_url));
+
         setContentView(R.layout.main_activity);
 
         titles = getResources().getStringArray(R.array.titles);
@@ -68,7 +74,7 @@ public class MainActivity extends Activity {
 
         getFragmentManager().beginTransaction().replace(R.id.content_frame,
                                                         new LocationListFragment(),
-                                                        CITY_LIST).commit();
+                                                        LOCATION_LIST).commit();
     }
 
     private void select(final int position) {
@@ -77,17 +83,17 @@ public class MainActivity extends Activity {
 
         switch (position) {
             case 0:
-                fragment = getFragmentManager().findFragmentByTag(CITY_LIST);
+                fragment = getFragmentManager().findFragmentByTag(LOCATION_LIST);
                 if(fragment == null) {
                     fragment = new LocationListFragment();
-                    fragmentTransaction.replace(R.id.content_frame, fragment, CITY_LIST);
+                    fragmentTransaction.replace(R.id.content_frame, fragment, LOCATION_LIST);
                 }
                 break;
             case 1:
-                fragment = getFragmentManager().findFragmentByTag(FOOD_LIST);
+                fragment = getFragmentManager().findFragmentByTag(DELICACY_LIST);
                 if(fragment == null) {
                     fragment = new DelicacyListFragment();
-                    fragmentTransaction.replace(R.id.content_frame, fragment, FOOD_LIST);
+                    fragmentTransaction.replace(R.id.content_frame, fragment, DELICACY_LIST);
                 }
                 break;
             default:
@@ -115,13 +121,20 @@ public class MainActivity extends Activity {
     }
 
     @Subscribe
-    public void onCityEvent(CityEvent cityEvent){
+    public void onLocationEvent(LocationEvent locationEvent){
         select(0);
     }
 
     @Subscribe
-    public void onFoodEvent(FoodEvent foodEvent){
+    public void onDelicacyEvent(DelicacyEvent delicacyEvent){
         select(1);
+    }
+
+    @Subscribe
+    public void onDownloadEvent(DownloadEvent downloadEvent){
+        Gson gson = new Gson();
+        locationList = gson.fromJson(downloadEvent.getResult(), LocationList.class);
+        AppBus.postToBus(new LocationListEvent(locationList));
     }
 
     @Override

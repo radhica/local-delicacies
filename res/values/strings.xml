@@ -7,4 +7,5 @@
     <string name="drawer_close">Close menu</string>
     <string name="detail_view">Details</string>
     <string name="menu_name">Menu</string>
+    <string name="json_url">http://107.170.189.86:8000/colabug/localfood.json</string>
 </resources>

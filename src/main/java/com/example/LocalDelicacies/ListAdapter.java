@@ -1,11 +1,6 @@
 package com.example.LocalDelicacies;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import com.squareup.picasso.Picasso;
-import events.ItemSelectedEvent;
 
 import java.util.ArrayList;
 
@@ -87,7 +81,7 @@ public class ListAdapter extends BaseAdapter {
         Picasso.with(context)
                .load(url)
                .placeholder(R.drawable.placeholder)
-               .resizeDimen(R.dimen.image_width,R.dimen.image_height)
+               .resizeDimen(R.dimen.image_width, R.dimen.image_height)
                .centerCrop()
                .into(viewHolder.image);
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 public class LocationListFragment extends ListFragment {
 
+
     @Override
     public ArrayList<BaseModel> populateModels() {
         items = new ArrayList<BaseModel>();

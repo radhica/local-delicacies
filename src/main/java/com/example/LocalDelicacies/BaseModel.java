@@ -1,10 +1,6 @@
 package com.example.LocalDelicacies;
 
-import android.app.Activity;
-
 import java.io.Serializable;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by mlandaverde on 7/18/14.

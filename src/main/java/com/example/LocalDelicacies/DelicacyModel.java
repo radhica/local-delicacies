@@ -1,9 +1,9 @@
 
 package com.example.LocalDelicacies;
 
+import javax.annotation.Generated;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
 public class DelicacyModel extends BaseModel{

@@ -3,5 +3,5 @@ package events;
 /**
  * Created by bnegron on 7/21/14.
  */
-public class FoodEvent extends BaseEvent {
+public class DelicacyEvent extends BaseEvent {
 }

@@ -9,8 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import events.BaseEvent;
-import events.CityEvent;
-import events.FoodEvent;
+import events.DelicacyEvent;
+import events.LocationEvent;
 
 /**
  * Created by mlandaverde on 7/21/14.
@@ -41,10 +41,10 @@ public class NavDrawerFragment extends Fragment {
     private void selectItem(int position) {
         switch (position){
             case 0:
-                AppBus.getInstance().postToBus(new CityEvent());
+                AppBus.getInstance().postToBus(new LocationEvent());
                 break;
             case 1:
-                AppBus.getInstance().postToBus(new FoodEvent());
+                AppBus.getInstance().postToBus(new DelicacyEvent());
                 break;
             default:
                 AppBus.getInstance().postToBus(new BaseEvent());
