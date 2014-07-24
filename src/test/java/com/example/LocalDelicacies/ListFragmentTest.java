@@ -15,7 +15,7 @@ public class ListFragmentTest {
 
     @Before
     public void setUp() {
-        listFragment = new CityListFragment();
+        listFragment = new LocationListFragment();
         startFragment(listFragment);
     }
 

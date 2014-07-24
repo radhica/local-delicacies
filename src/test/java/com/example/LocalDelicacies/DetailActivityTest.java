@@ -26,7 +26,7 @@ public class DetailActivityTest {
 
         ArrayList<BaseModel> items = new ArrayList<BaseModel>();
 
-        items.add(new FoodModel("name", "placeholder", 0, "asdfas"));
+        items.add(new DelicacyModel("name", "asdfas","placeholder"));
 
         intent.putExtra("items", items);
         intent.putExtra("itemId", 0);

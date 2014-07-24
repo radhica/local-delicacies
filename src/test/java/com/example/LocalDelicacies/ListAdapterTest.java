@@ -5,7 +5,6 @@ import android.view.View;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
@@ -33,12 +32,12 @@ public class ListAdapterTest {
 
     private void populateListOfItems() {
         items = new ArrayList<BaseModel>();
-        items.add(new CityModel("Item0","placeholder",0,""));
-        items.add(new CityModel("Item1","placeholder",1,""));
+        items.add(new LocationModel("Item0","dcss","placeholder"));
+        items.add(new LocationModel("Item1","dcss","placeholder"));
     }
 
     private Activity startActivity() {
-        CityListFragment listFragment = new CityListFragment();
+        LocationListFragment listFragment = new LocationListFragment();
         startFragment(listFragment);
         return listFragment.getActivity();
     }
@@ -73,7 +72,7 @@ public class ListAdapterTest {
     @Test
     public void getItemId_shouldReturnProperId() throws Exception {
         for(int index = 0; index < items.size(); index++)
-            assertEquals(listAdapter.getItemId(index), items.get(index).getId());
+            assertEquals(listAdapter.getItemId(index), index);
     }
 
     @Test

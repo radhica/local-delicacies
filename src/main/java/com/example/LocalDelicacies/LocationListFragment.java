@@ -7,19 +7,19 @@ import java.util.ArrayList;
 /**
  * Created by mlandaverde on 7/21/14.
  */
-public class CityListFragment extends ListFragment {
+public class LocationListFragment extends ListFragment {
 
     @Override
     public ArrayList<BaseModel> populateModels() {
         items = new ArrayList<BaseModel>();
         pinnedItems = new ArrayList<BaseModel>();
 
-        items.add(new CityModel("Gainesville","gville",0, "This is Gainesville."));
-        items.add(new CityModel("Chicago","gville",1, "This is Chicago."));
-        items.add(new CityModel("Miami","gville",2, "This is Miami."));
-        items.add(new CityModel("New York","gville",3, "This is New York."));
-        items.add(new CityModel("Atlanta","gville",4, "This is Atlanta."));
-        items.add(new CityModel("Philadelphia","gville",5, "This is Philadelphia."));
+        items.add(new LocationModel("Gainesville", "This is Gainesville.","gville"));
+        items.add(new LocationModel("Chicago", "This is Chicago.","gville"));
+        items.add(new LocationModel("Miami", "This is Miami.","gville"));
+        items.add(new LocationModel("New York", "This is New York.","gville"));
+        items.add(new LocationModel("Atlanta", "This is Atlanta.","gville"));
+        items.add(new LocationModel("Philadelphia", "This is Philadelphia.","gville"));
         return items;
     }
 

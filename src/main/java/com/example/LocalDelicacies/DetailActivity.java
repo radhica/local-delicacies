@@ -43,7 +43,7 @@ public class DetailActivity extends Activity{
 
     private void populateDetails() {
         TextView detailName = (TextView) findViewById(R.id.base_item_name);
-        detailName.setText(detailItem.getName());
+        detailName.setText(detailItem.getTitle());
 
         ImageView detailImage = (ImageView) findViewById(R.id.base_item_image);
         String url = "";
@@ -83,7 +83,7 @@ public class DetailActivity extends Activity{
     }
 
     private void toggleRatingBarView() {
-        if (detailItem instanceof FoodModel) {
+        if (detailItem instanceof DelicacyModel) {
             ratingBar.setVisibility(View.VISIBLE);
         } else {
             ratingBar.setVisibility(View.GONE);

@@ -3,7 +3,6 @@ package com.example.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -12,12 +11,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-import events.BaseEvent;
 import events.CityEvent;
 import events.FoodEvent;
-import events.ItemSelectedEvent;
 
 /**
  * Created by bnegron on 7/21/14.
@@ -71,7 +67,7 @@ public class MainActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);
 
         getFragmentManager().beginTransaction().replace(R.id.content_frame,
-                                                        new CityListFragment(),
+                                                        new LocationListFragment(),
                                                         CITY_LIST).commit();
     }
 
@@ -83,14 +79,14 @@ public class MainActivity extends Activity {
             case 0:
                 fragment = getFragmentManager().findFragmentByTag(CITY_LIST);
                 if(fragment == null) {
-                    fragment = new CityListFragment();
+                    fragment = new LocationListFragment();
                     fragmentTransaction.replace(R.id.content_frame, fragment, CITY_LIST);
                 }
                 break;
             case 1:
                 fragment = getFragmentManager().findFragmentByTag(FOOD_LIST);
                 if(fragment == null) {
-                    fragment = new FoodListFragment();
+                    fragment = new DelicacyListFragment();
                     fragmentTransaction.replace(R.id.content_frame, fragment, FOOD_LIST);
                 }
                 break;

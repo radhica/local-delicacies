@@ -11,31 +11,28 @@ import static java.security.AccessController.getContext;
  */
 public class BaseModel implements Serializable{
 
-    private int id;
-    private boolean isChecked;
-
-    private String name;
-    private String imageUrl;
+    
+    private String title;
     private String description;
-
+    private String imageUrl;
+    private boolean isChecked;
+    
     // Only for local testing purposes
-    public BaseModel(String name, String imageUrl, int id, String description) {
-        this.name = name;
+    public BaseModel(String title, String imageUrl, String description) {
+        this.title = title;
         this.imageUrl = imageUrl;
-        this.id = id;
         this.description = description;
     }
 
-    public BaseModel(String name, String imageUrl, int id, String description, boolean isChecked) {
-        this.name = name;
+    public BaseModel(String title, String imageUrl, String description, boolean isChecked) {
+        this.title = title;
         this.imageUrl = imageUrl;
-        this.id = id;
         this.description = description;
         this.isChecked = isChecked;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getImageUrl() {
@@ -44,10 +41,6 @@ public class BaseModel implements Serializable{
 
     public int getImageId(){
         return R.drawable.placeholder;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public boolean isChecked() {

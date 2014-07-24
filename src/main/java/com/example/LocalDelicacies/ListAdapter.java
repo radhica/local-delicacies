@@ -42,7 +42,7 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return items.get(position).getId();
+        return position;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ListAdapter extends BaseAdapter {
         String url = "";
         String modelType = ((Object) baseModel).getClass().getSimpleName();
 
-        if(modelType.equals("CityModel"))
+        if(modelType.equals("LocationModel"))
             url = "http://i.imgur.com/16MFwqc.jpg";
         else
             url = "http://i.imgur.com/E2QXn3B.jpg";
@@ -94,7 +94,7 @@ public class ListAdapter extends BaseAdapter {
     }
 
     private void configureText(BaseModel baseModel, ViewHolder viewHolder) {
-        viewHolder.name.setText(baseModel.getName());
+        viewHolder.name.setText(baseModel.getTitle());
     }
 
     private void configureSymbol(BaseModel baseModel, ViewHolder viewHolder) {
