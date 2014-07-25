@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +18,10 @@ import events.DownloadEvent;
 
 import java.util.ArrayList;
 
-public class DelicacyListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<DelicacyModel>>  {
+public class DelicacyListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Delicacy>>  {
 
-    private ArrayList<DelicacyModel> items;
-    private ArrayList<DelicacyModel> pinnedItems;
+    private ArrayList<Delicacy> items;
+    private ArrayList<Delicacy> pinnedItems;
     protected ArrayList<View> pages = new ArrayList<View>();
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
@@ -78,22 +77,22 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
     }
 
     public void populateItems() {
-        items = new ArrayList<DelicacyModel>();
+        items = new ArrayList<Delicacy>();
     }
 
     public void populatePinnedItems() {
-        pinnedItems = new ArrayList<DelicacyModel>();
+        pinnedItems = new ArrayList<Delicacy>();
     }
 
     private void checkedPinned() {
         pinnedItems.clear();
-        for (DelicacyModel i : items) {
+        for (Delicacy i : items) {
             if (i.isPinned())
                 pinnedItems.add(i);
         }
     }
 
-    private ListView createListView(final ArrayList<DelicacyModel> items) {
+    private ListView createListView(final ArrayList<Delicacy> items) {
         ListView allListView = new ListView(layout.getContext());
         ListAdapter allListAdapter = new ListAdapter(getActivity(), items);
         allListView.setAdapter(allListAdapter);
@@ -163,16 +162,16 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
     }
 
     @Override
-    public Loader<ArrayList<DelicacyModel>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<Delicacy>> onCreateLoader(int id, Bundle args) {
         return new DelicacyListLoader(this.getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<DelicacyModel>> loader, ArrayList<DelicacyModel> data) {
+    public void onLoadFinished(Loader<ArrayList<Delicacy>> loader, ArrayList<Delicacy> data) {
         this.items = data;
         populateListViews();
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<DelicacyModel>> loader) {}
+    public void onLoaderReset(Loader<ArrayList<Delicacy>> loader) {}
 }

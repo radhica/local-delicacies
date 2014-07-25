@@ -10,20 +10,20 @@ import java.util.ArrayList;
 /**
  * Created by bnegron on 7/25/14.
  */
-public class DelicacyListLoader extends AsyncTaskLoader<ArrayList<DelicacyModel>> {
+public class DelicacyListLoader extends AsyncTaskLoader<ArrayList<Delicacy>> {
     private final Context context;
-    private ArrayList<DelicacyModel> delicacyModels;
+    private ArrayList<Delicacy> delicacies;
 
     public DelicacyListLoader(Context context) {
         super(context);
         this.context = context;
-        delicacyModels = new ArrayList<DelicacyModel>();
+        delicacies = new ArrayList<Delicacy>();
     }
 
     @Override
-    public ArrayList<DelicacyModel> loadInBackground() {
+    public ArrayList<Delicacy> loadInBackground() {
         populateDelicacyModelsFromDb();
-        return delicacyModels;
+        return delicacies;
     }
 
     private void populateDelicacyModelsFromDb() {
@@ -47,12 +47,12 @@ public class DelicacyListLoader extends AsyncTaskLoader<ArrayList<DelicacyModel>
 
         if(cursor.moveToFirst()) {
             do {
-                DelicacyModel newDelicacyModel = new DelicacyModel(cursor.getString(1),     //title
+                Delicacy newDelicacy = new Delicacy(cursor.getString(1),     //title
                         cursor.getString(2),                                                //desc
                         cursor.getString(3),                                                //imageUrl
                         getBoolean(cursor.getInt(4)),                                       //pinned
                         cursor.getInt(5));                                                  //rating
-                delicacyModels.add(newDelicacyModel);
+                delicacies.add(newDelicacy);
             } while (cursor.moveToNext());
         }
     }

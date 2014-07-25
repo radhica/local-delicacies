@@ -18,10 +18,10 @@ import events.DownloadEvent;
 
 import java.util.ArrayList;
 
-public class LocationListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LocationModel>> {
+public class LocationListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Location>> {
 
-    private ArrayList<LocationModel> items;
-    private ArrayList<LocationModel> pinnedItems;
+    private ArrayList<Location> items;
+    private ArrayList<Location> pinnedItems;
     protected ArrayList<View> pages = new ArrayList<View>();
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
@@ -75,22 +75,22 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
     }
 
     public void populateItems() {
-        items = new ArrayList<LocationModel>();
+        items = new ArrayList<Location>();
     }
 
     public void populatePinnedItems() {
-        pinnedItems = new ArrayList<LocationModel>();
+        pinnedItems = new ArrayList<Location>();
     }
 
     private void checkedPinned() {
         pinnedItems.clear();
-        for (LocationModel i : items) {
+        for (Location i : items) {
             if (i.isPinned())
                 pinnedItems.add(i);
         }
     }
 
-    private ListView createListView(final ArrayList<LocationModel> items) {
+    private ListView createListView(final ArrayList<Location> items) {
         ListView allListView = new ListView(layout.getContext());
         ListAdapter allListAdapter = new ListAdapter(getActivity(), items);
         allListView.setAdapter(allListAdapter);
@@ -160,16 +160,16 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
     }
 
     @Override
-    public Loader<ArrayList<LocationModel>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<Location>> onCreateLoader(int id, Bundle args) {
         return new LocationListLoader(this.getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<LocationModel>> loader, ArrayList<LocationModel> data) {
+    public void onLoadFinished(Loader<ArrayList<Location>> loader, ArrayList<Location> data) {
         this.items = data;
         populateListViews();
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<LocationModel>> loader) {}
+    public void onLoaderReset(Loader<ArrayList<Location>> loader) {}
 }

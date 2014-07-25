@@ -1,25 +1,24 @@
 
 package com.example.LocalDelicacies;
 
-import javax.annotation.Generated;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
 public class LocationList {
 
-    private ArrayList<LocationModel> locationModels = new ArrayList<LocationModel>();
+    private List<Location> locations = new ArrayList<Location>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public ArrayList<LocationModel> getLocationModels() {
-        return locationModels;
+    public List<Location> getLocations() {
+        return locations;
     }
 
-    public void setLocationModels(ArrayList<LocationModel> locationModels) {
-        this.locationModels = locationModels;
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 
     public Map<String, Object> getAdditionalProperties() {

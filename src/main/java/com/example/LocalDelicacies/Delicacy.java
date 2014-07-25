@@ -6,20 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Generated("org.jsonschema2pojo")
-public class DelicacyModel extends BaseModel{
+public class Delicacy extends BaseModel{
 
     private int rating;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public DelicacyModel(String title, String description, String imageUrl){
+    public Delicacy(String title, String description, String imageUrl){
         super(title, description, imageUrl);
     }
 
-    public DelicacyModel(String title, String description, String imageUrl, boolean pinned) {
+    public Delicacy(String title, String description, String imageUrl, boolean pinned) {
         super(title, imageUrl, description, pinned);
     }
 
-    public DelicacyModel(String title, String description, String imageUrl, boolean pinned, int rating) {
+    public Delicacy(String title, String description, String imageUrl, boolean pinned, int rating) {
         super(title, description, imageUrl, pinned);
         this.rating = rating;
     }

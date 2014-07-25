@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -96,8 +97,8 @@ public class MainActivity extends Activity {
                 }
                 break;
             default:
-                fragment = new ListFragment();
-                break;
+                Log.d("SELECTION ERROR:\t", "No selection found.");
+                return;
         }
 
         fragmentTransaction.commit();

@@ -83,7 +83,7 @@ public class DetailActivity extends Activity{
     }
 
     private void toggleRatingBarView() {
-        if (detailItem instanceof DelicacyModel) {
+        if (detailItem instanceof Delicacy) {
             ratingBar.setVisibility(View.VISIBLE);
         } else {
             ratingBar.setVisibility(View.GONE);

@@ -10,20 +10,20 @@ import java.util.ArrayList;
 /**
  * Created by bnegron on 7/25/14.
  */
-public class LocationListLoader extends AsyncTaskLoader<ArrayList<LocationModel>> {
+public class LocationListLoader extends AsyncTaskLoader<ArrayList<Location>> {
     private final Context context;
-    private ArrayList<LocationModel> locationModels;
+    private ArrayList<Location> locations;
 
     public LocationListLoader(Context context) {
         super(context);
         this.context = context;
-        locationModels = new ArrayList<LocationModel>();
+        locations = new ArrayList<Location>();
     }
 
     @Override
-    public ArrayList<LocationModel> loadInBackground() {
+    public ArrayList<Location> loadInBackground() {
         populateLocationModelsFromDb();
-        return locationModels;
+        return locations;
     }
 
     private void populateLocationModelsFromDb() {
@@ -46,11 +46,11 @@ public class LocationListLoader extends AsyncTaskLoader<ArrayList<LocationModel>
 
         if(cursor.moveToFirst()) {
             do {
-                LocationModel newLocationModel = new LocationModel(cursor.getString(1),     //title
+                Location newLocation = new Location(cursor.getString(1),     //title
                         cursor.getString(2),                                                //desc
                         cursor.getString(3),                                                //imageurl
                         getBoolean(cursor.getInt(4)));                                      //pinned
-                locationModels.add(newLocationModel);
+                locations.add(newLocation);
             } while (cursor.moveToNext());
         }
     }

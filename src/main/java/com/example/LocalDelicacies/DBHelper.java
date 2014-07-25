@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper{
     DBContract.DBEntry.DELICACY_COLUMN_RATING + TYPE_INT +" )";
 
     private static final String DELETE_ENTRIES_DELICACY =
-            "DROP TABLE IF EXISTS " + DBContract.DBEntry.LOCATION_TABLE_NAME;
+            "DROP TABLE IF EXISTS " + DBContract.DBEntry.DELICACY_TABLE_NAME;
 
     public DBHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

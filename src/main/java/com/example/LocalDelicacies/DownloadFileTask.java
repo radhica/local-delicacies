@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -88,6 +89,7 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
         Gson gson = new Gson();
         LocationList locationList = gson.fromJson(result, LocationList.class);
 
+        Log.d("Populating tables with list of size:\t", ""+locationList.getLocations().size());
         populateTables(locationList);
 
         AppBus.getInstance().postToBus(new DownloadEvent());
@@ -98,21 +100,22 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
     private void populateTables(LocationList locationList) {
         SQLiteDatabase sqLite = new DBHelper(context).getWritableDatabase();
         ContentValues values = new ContentValues();
-        ArrayList<LocationModel> locationModels = locationList.getLocationModels();
-        ArrayList<DelicacyModel> delicacyModels = new ArrayList<DelicacyModel>();
+        List<Location> locations = locationList.getLocations();
+        ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
 
-        for(LocationModel i:locationModels){
-            delicacyModels.addAll(i.getDelicacies());
+        for(Location i: locations){
+            delicacies.addAll(i.getDelicacies());
 
             values.put(DBContract.DBEntry.LOCATION_COLUMN_NAME, i.getTitle());
             values.put(DBContract.DBEntry.LOCATION_COLUMN_DESCRIPTION, i.getDescription());
             values.put(DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL, i.getImageUrl());
             values.put(DBContract.DBEntry.LOCATION_COLUMN_PINNED, i.isPinned());
 
-            sqLite.insert(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values);
+            Log.d("Added values at row:\t",
+                ""+sqLite.insert(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values));
         }
 
-        for(DelicacyModel i:delicacyModels){
+        for(Delicacy i: delicacies){
             values.put(DBContract.DBEntry.DELICACY_COLUMN_NAME, i.getTitle());
             values.put(DBContract.DBEntry.DELICACY_COLUMN_DESCRIPTION, i.getDescription());
             values.put(DBContract.DBEntry.DELICACY_COLUMN_IMAGE_URL, i.getImageUrl());
