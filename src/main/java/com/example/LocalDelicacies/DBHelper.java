@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper{
     DBContract.DBEntry.LOCATION_COLUMN_NAME + TYPE_TEXT + COMMA_SEP +
     DBContract.DBEntry.LOCATION_COLUMN_DESCRIPTION+ TYPE_TEXT + COMMA_SEP +
     DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL+ TYPE_TEXT + COMMA_SEP +
-    DBContract.DBEntry.LOCATION_COLUMN_PINNED+ TYPE_INT + COMMA_SEP + " )";
+    DBContract.DBEntry.LOCATION_COLUMN_PINNED+ TYPE_INT + " )";
 
     private static final String DELETE_ENTRIES_LOCATION =
             "DROP TABLE IF EXISTS " + DBContract.DBEntry.LOCATION_TABLE_NAME;
@@ -31,7 +31,7 @@ public class DBHelper extends SQLiteOpenHelper{
     DBContract.DBEntry.DELICACY_COLUMN_DESCRIPTION+ TYPE_TEXT + COMMA_SEP +
     DBContract.DBEntry.DELICACY_COLUMN_IMAGE_URL+ TYPE_TEXT + COMMA_SEP +
     DBContract.DBEntry.DELICACY_COLUMN_PINNED+ TYPE_INT + COMMA_SEP +
-    DBContract.DBEntry.DELICACY_COLUMN_RATING + TYPE_INT + COMMA_SEP +" )";
+    DBContract.DBEntry.DELICACY_COLUMN_RATING + TYPE_INT +" )";
 
     private static final String DELETE_ENTRIES_DELICACY =
             "DROP TABLE IF EXISTS " + DBContract.DBEntry.LOCATION_TABLE_NAME;

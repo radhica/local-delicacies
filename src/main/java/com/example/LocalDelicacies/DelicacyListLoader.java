@@ -45,15 +45,16 @@ public class DelicacyListLoader extends AsyncTaskLoader<ArrayList<DelicacyModel>
                 null,                                                                   //filter by row groups
                 sortOrder);                                                             //sort order
 
-        cursor.moveToFirst();
-        do{
-            DelicacyModel newDelicacyModel = new DelicacyModel(cursor.getString(1),             //title
-                                                               cursor.getString(2),             //desc
-                                                               cursor.getString(3),             //imageUrl
-                                                               getBoolean(cursor.getInt(4)),    //pinned
-                                                               cursor.getInt(5));               //rating
-            delicacyModels.add(newDelicacyModel);
-        }while (cursor.moveToNext());
+        if(cursor.moveToFirst()) {
+            do {
+                DelicacyModel newDelicacyModel = new DelicacyModel(cursor.getString(1),     //title
+                        cursor.getString(2),                                                //desc
+                        cursor.getString(3),                                                //imageUrl
+                        getBoolean(cursor.getInt(4)),                                       //pinned
+                        cursor.getInt(5));                                                  //rating
+                delicacyModels.add(newDelicacyModel);
+            } while (cursor.moveToNext());
+        }
     }
 
     private boolean getBoolean(int i) {return i == 1;}

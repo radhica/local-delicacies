@@ -44,14 +44,15 @@ public class LocationListLoader extends AsyncTaskLoader<ArrayList<LocationModel>
                 null,                                                                   //filter by row groups
                 sortOrder);                                                             //sort order
 
-        cursor.moveToFirst();
-        do{
-            LocationModel newLocationModel = new LocationModel(cursor.getString(1),             //title
-                                                               cursor.getString(2),             //desc
-                                                               cursor.getString(3),             //imageurl
-                                                               getBoolean(cursor.getInt(4)));   //pinned
-            locationModels.add(newLocationModel);
-        }while (cursor.moveToNext());
+        if(cursor.moveToFirst()) {
+            do {
+                LocationModel newLocationModel = new LocationModel(cursor.getString(1),     //title
+                        cursor.getString(2),                                                //desc
+                        cursor.getString(3),                                                //imageurl
+                        getBoolean(cursor.getInt(4)));                                      //pinned
+                locationModels.add(newLocationModel);
+            } while (cursor.moveToNext());
+        }
     }
 
     private boolean getBoolean(int i) {return i == 1;}

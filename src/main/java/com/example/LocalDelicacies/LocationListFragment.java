@@ -3,10 +3,11 @@ package com.example.LocalDelicacies;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import events.DownloadEvent;
 
 import java.util.ArrayList;
 
-public class LocationListFragment extends Fragment {
+public class LocationListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<LocationModel>> {
 
     private ArrayList<LocationModel> items;
     private ArrayList<LocationModel> pinnedItems;
@@ -25,14 +26,13 @@ public class LocationListFragment extends Fragment {
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
     private View layout;
-    private LocationList locationList;
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        new DownloadFileTask(container.getContext()).execute(getString(R.string.json_url));
+        getLoaderManager().initLoader(0, null, this);
 
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
         populateListViews();
@@ -58,26 +58,28 @@ public class LocationListFragment extends Fragment {
     }
 
     private void populateListViews() {
-        this.items = new LocationListLoader(this.getActivity()).loadInBackground();
-        Log.d("Loading complete; item size:\t", "" + items.size());
-
         if (items == null)
-            items = populateModels();
+            populateItems();
+        if (pinnedItems == null)
+            populatePinnedItems();
 
         ListView listView = createListView(items);
         pages.add(listView);
 
         checkedPinned();
 
-        ListView pinnedListView = createListView(pinnedItems);
-        pages.add(pinnedListView);
+        if(pinnedItems.size() != 0) {
+            ListView pinnedListView = createListView(pinnedItems);
+            pages.add(pinnedListView);
+        }
     }
 
-    public ArrayList<LocationModel> populateModels() {
+    public void populateItems() {
         items = new ArrayList<LocationModel>();
-        pinnedItems = new ArrayList<LocationModel>();
+    }
 
-        return items;
+    public void populatePinnedItems() {
+        pinnedItems = new ArrayList<LocationModel>();
     }
 
     private void checkedPinned() {
@@ -112,18 +114,6 @@ public class LocationListFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        AppBus.getInstance().getBus().register(this);
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        AppBus.getInstance().getBus().unregister(this);
-        super.onPause();
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -147,16 +137,39 @@ public class LocationListFragment extends Fragment {
                 actionBar.selectTab(tab);
                 viewPager.setCurrentItem(tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
             }
-
             @Override
             public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
             }
         };
-
         setTabs(actionBar, tabListener);
     }
+
+    @Override
+    public void onResume() {
+        AppBus.getInstance().getBus().register(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        AppBus.getInstance().getBus().unregister(this);
+        super.onPause();
+    }
+
+    @Override
+    public Loader<ArrayList<LocationModel>> onCreateLoader(int id, Bundle args) {
+        return new LocationListLoader(this.getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<LocationModel>> loader, ArrayList<LocationModel> data) {
+        this.items = data;
+        populateListViews();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<LocationModel>> loader) {}
 }

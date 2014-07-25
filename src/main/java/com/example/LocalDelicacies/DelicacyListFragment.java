@@ -3,7 +3,9 @@ package com.example.LocalDelicacies;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -17,7 +19,7 @@ import events.DownloadEvent;
 
 import java.util.ArrayList;
 
-public class DelicacyListFragment extends Fragment {
+public class DelicacyListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<DelicacyModel>>  {
 
     private ArrayList<DelicacyModel> items;
     private ArrayList<DelicacyModel> pinnedItems;
@@ -25,14 +27,13 @@ public class DelicacyListFragment extends Fragment {
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
     private View layout;
-    private LocationList locationList;
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        new DownloadFileTask(container.getContext()).execute(getString(R.string.json_url));
+        getLoaderManager().initLoader(0, null, this);
 
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
         populateListViews();
@@ -41,13 +42,6 @@ public class DelicacyListFragment extends Fragment {
         viewPager.setAdapter(viewPagerAdapter);
 
         return layout;
-    }
-
-    public ArrayList<DelicacyModel> populateModels() {
-        items = new ArrayList<DelicacyModel>();
-        pinnedItems = new ArrayList<DelicacyModel>();
-
-        return items;
     }
 
     protected void setTabs(ActionBar actionBar, ActionBar.TabListener tabListener) {
@@ -67,19 +61,28 @@ public class DelicacyListFragment extends Fragment {
     }
 
     private void populateListViews() {
-        this.items = new DelicacyListLoader(this.getActivity()).loadInBackground();
-        Log.d("Loading complete; item size:\t", "" + items.size());
-
         if (items == null)
-            items = populateModels();
+            populateItems();
+        if (pinnedItems == null)
+            populatePinnedItems();
 
         ListView listView = createListView(items);
         pages.add(listView);
 
         checkedPinned();
 
-        ListView pinnedListView = createListView(pinnedItems);
-        pages.add(pinnedListView);
+        if(pinnedItems.size() != 0) {
+            ListView pinnedListView = createListView(pinnedItems);
+            pages.add(pinnedListView);
+        }
+    }
+
+    public void populateItems() {
+        items = new ArrayList<DelicacyModel>();
+    }
+
+    public void populatePinnedItems() {
+        pinnedItems = new ArrayList<DelicacyModel>();
     }
 
     private void checkedPinned() {
@@ -137,16 +140,13 @@ public class DelicacyListFragment extends Fragment {
                 actionBar.selectTab(tab);
                 viewPager.setCurrentItem(tab.getPosition());
             }
-
             @Override
             public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
             }
-
             @Override
             public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
             }
         };
-
         setTabs(actionBar, tabListener);
     }
 
@@ -162,4 +162,17 @@ public class DelicacyListFragment extends Fragment {
         super.onPause();
     }
 
+    @Override
+    public Loader<ArrayList<DelicacyModel>> onCreateLoader(int id, Bundle args) {
+        return new DelicacyListLoader(this.getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<DelicacyModel>> loader, ArrayList<DelicacyModel> data) {
+        this.items = data;
+        populateListViews();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<DelicacyModel>> loader) {}
 }

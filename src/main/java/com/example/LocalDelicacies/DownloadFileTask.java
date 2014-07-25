@@ -85,7 +85,6 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.d("Download complete; result:\t", result);
         Gson gson = new Gson();
         LocationList locationList = gson.fromJson(result, LocationList.class);
 

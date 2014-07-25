@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         registerWithBus();
+        new DownloadFileTask(this).execute(getString(R.string.json_url));
 
         setContentView(R.layout.main_activity);
 
