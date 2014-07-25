@@ -10,7 +10,7 @@ import java.util.Map;
 @Generated("org.jsonschema2pojo")
 public class LocationModel extends BaseModel{
 
-    private List<DelicacyModel> delicacies = new ArrayList<DelicacyModel>();
+    private ArrayList<DelicacyModel> delicacies = new ArrayList<DelicacyModel>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public LocationModel(String title, String imageUrl, String description) {
@@ -21,11 +21,11 @@ public class LocationModel extends BaseModel{
         super(title, description, imageUrl, isChecked);
     }
     
-    public List<DelicacyModel> getDelicacies() {
+    public ArrayList<DelicacyModel> getDelicacies() {
         return delicacies;
     }
 
-    public void setDelicacies(List<DelicacyModel> delicacies) {
+    public void setDelicacies(ArrayList<DelicacyModel> delicacies) {
         this.delicacies = delicacies;
     }
 

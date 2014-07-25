@@ -29,12 +29,10 @@ public class MainActivity extends Activity {
     private DrawerLayout drawerLayout;
     private String lastActionBarTitle;
     private boolean shouldGoInvisible;
-    private LocationList locationList;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         registerWithBus();
-        //new DownloadFileTask(this).execute(getString(R.string.json_url));
 
         setContentView(R.layout.main_activity);
 
@@ -128,13 +126,6 @@ public class MainActivity extends Activity {
     @Subscribe
     public void onDelicacyEvent(DelicacyEvent delicacyEvent){
         select(1);
-    }
-
-    @Subscribe
-    public void onDownloadEvent(DownloadEvent downloadEvent){
-        Gson gson = new Gson();
-        locationList = gson.fromJson(downloadEvent.getResult(), LocationList.class);
-        AppBus.postToBus(new LocationListEvent(locationList));
     }
 
     @Override

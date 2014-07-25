@@ -11,7 +11,7 @@ import static support.Assert.FragmentUtil.startFragment;
 @RunWith(RobolectricTestRunner.class)
 
 public class ListFragmentTest {
-    private ListFragment listFragment;
+    private LocationListFragment listFragment;
 
     @Before
     public void setUp() {

@@ -5,9 +5,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import events.DownloadEvent;
-import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -18,7 +20,6 @@ import java.net.URL;
 public class DownloadFileTask extends AsyncTask<String, Void, String> {
     ProgressDialog progressDialog;
     Context context;
-    private JSONObject content;
 
     public DownloadFileTask(Context context){
         this.context = context;
@@ -27,8 +28,6 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
-        //loading indicator
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
@@ -56,11 +55,19 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
                 Log.d("Response code:\t", ""+response);
 
                 in = connection.getInputStream();
-
-
             } catch (Exception e){Log.d("Exception downloading:\t", e.toString());}
         }
-        return in.toString();
+        return readInput(in);
+    }
+
+    private String readInput(InputStream in) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        char[] input = new char[1000000];
+        try {
+            reader.read(input);
+        } catch (IOException e) { Log.d("Exception reading input:\t", "" + e);}
+
+        return String.valueOf(input);
     }
 
     @Override
@@ -71,7 +78,8 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        AppBus.postToBus(new DownloadEvent(result));
+        AppBus.getInstance().postToBus(new DownloadEvent(result));
+        progressDialog.dismiss();
         super.onPostExecute(result);
     }
 }
