@@ -1,14 +1,16 @@
 package events;
 
+import android.util.Log;
+import com.example.LocalDelicacies.LocationList;
 import org.json.JSONObject;
 
 /**
  * Created by bnegron on 7/24/14.
  */
 public class DownloadEvent extends BaseEvent {
-    String result;
-    public DownloadEvent(String result) {
+    LocationList result;
+    public DownloadEvent(LocationList result) {
         this.result = result;
     }
-    public String getResult(){return result;}
+    public LocationList getResult(){return result;}
 }

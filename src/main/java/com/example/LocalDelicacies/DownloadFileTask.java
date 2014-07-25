@@ -4,12 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import com.google.gson.Gson;
 import events.DownloadEvent;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -61,13 +59,17 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
     }
 
     private String readInput(InputStream in) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        char[] input = new char[1000000];
-        try {
-            reader.read(input);
-        } catch (IOException e) { Log.d("Exception reading input:\t", "" + e);}
+        BufferedReader streamReader = new BufferedReader(new InputStreamReader(in));
+        StringBuilder responseStrBuilder = new StringBuilder();
+        String input = "";
 
-        return String.valueOf(input);
+        try {
+            while ((input = streamReader.readLine()) != null)
+                responseStrBuilder.append(input);
+        } catch (Exception e) { Log.d("Exception reading input:\t", "" + e);}
+
+        input = responseStrBuilder.toString();
+        return input;
     }
 
     @Override
@@ -78,7 +80,11 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        AppBus.getInstance().postToBus(new DownloadEvent(result));
+        Log.d("Download complete; result:\t", result);
+        Gson gson = new Gson();
+        LocationList locationList = gson.fromJson(result, LocationList.class);
+
+        AppBus.getInstance().postToBus(new DownloadEvent(locationList));
         progressDialog.dismiss();
         super.onPostExecute(result);
     }

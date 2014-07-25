@@ -63,8 +63,7 @@ public class DelicacyListFragment extends Fragment {
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        Gson gson = new Gson();
-        locationList = gson.fromJson(downloadEvent.getResult(), LocationList.class);
+        locationList = downloadEvent.getResult();
         ArrayList<LocationModel> locationModels = locationList.getLocationModels();
         for(LocationModel i:locationModels){
             items.addAll(i.getDelicacies());

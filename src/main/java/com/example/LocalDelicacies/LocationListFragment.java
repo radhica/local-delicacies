@@ -62,8 +62,7 @@ public class LocationListFragment extends Fragment {
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        Gson gson = new Gson();
-        locationList = gson.fromJson(downloadEvent.getResult(), LocationList.class);
+        locationList = downloadEvent.getResult();
         this.items = locationList.getLocationModels();
         Log.d("Download complete; item size:\t", "" + items.size());
         populateListViews();
