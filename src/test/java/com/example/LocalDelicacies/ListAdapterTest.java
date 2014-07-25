@@ -32,8 +32,8 @@ public class ListAdapterTest {
 
     private void populateListOfItems() {
         items = new ArrayList<BaseModel>();
-        items.add(new LocationModel("Item0","dcss","placeholder"));
-        items.add(new LocationModel("Item1","dcss","placeholder"));
+        items.add(new Location("Item0","dcss","placeholder"));
+        items.add(new Location("Item1","dcss","placeholder"));
     }
 
     private Activity startActivity() {

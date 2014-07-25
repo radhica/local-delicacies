@@ -25,7 +25,7 @@ public class DetailActivityTest {
 
         ArrayList<BaseModel> items = new ArrayList<BaseModel>();
 
-        items.add(new DelicacyModel("name", "asdfas","placeholder"));
+        items.add(new Delicacy("name", "asdfas","placeholder"));
 
         intent.putExtra("items", items);
         intent.putExtra("itemId", 0);

@@ -32,7 +32,7 @@ public class ViewPagerAdapterTest {
     }
 
     private Activity startActivity() {
-        ListFragment listFragment = new ListFragment();
+        LocationListFragment listFragment = new LocationListFragment();
         startFragment(listFragment);
         return listFragment.getActivity();
     }
