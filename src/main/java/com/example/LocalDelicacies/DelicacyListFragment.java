@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.google.gson.Gson;
 import com.squareup.otto.Subscribe;
 import events.DownloadEvent;
 
@@ -63,17 +62,14 @@ public class DelicacyListFragment extends Fragment {
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        locationList = downloadEvent.getResult();
-        ArrayList<LocationModel> locationModels = locationList.getLocationModels();
-        for(LocationModel i:locationModels){
-            items.addAll(i.getDelicacies());
-        }
-        Log.d("Download complete; item size:\t", ""+items.size());
         populateListViews();
         viewPagerAdapter.notifyDataSetChanged();
     }
 
     private void populateListViews() {
+        this.items = new DelicacyListLoader(this.getActivity()).loadInBackground();
+        Log.d("Loading complete; item size:\t", "" + items.size());
+
         if (items == null)
             items = populateModels();
 
@@ -89,7 +85,7 @@ public class DelicacyListFragment extends Fragment {
     private void checkedPinned() {
         pinnedItems.clear();
         for (DelicacyModel i : items) {
-            if (i.isChecked())
+            if (i.isPinned())
                 pinnedItems.add(i);
         }
     }
@@ -153,4 +149,17 @@ public class DelicacyListFragment extends Fragment {
 
         setTabs(actionBar, tabListener);
     }
+
+    @Override
+    public void onResume() {
+        AppBus.getInstance().getBus().register(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        AppBus.getInstance().getBus().unregister(this);
+        super.onPause();
+    }
+
 }

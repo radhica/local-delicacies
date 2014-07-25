@@ -15,8 +15,12 @@ public class DelicacyModel extends BaseModel{
         super(title, description, imageUrl);
     }
 
-    public DelicacyModel(String title, String description, String imageUrl, int rating) {
-        super(title, description, imageUrl);
+    public DelicacyModel(String title, String description, String imageUrl, boolean pinned) {
+        super(title, imageUrl, description, pinned);
+    }
+
+    public DelicacyModel(String title, String description, String imageUrl, boolean pinned, int rating) {
+        super(title, description, imageUrl, pinned);
         this.rating = rating;
     }
 

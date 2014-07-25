@@ -57,7 +57,7 @@ public class ListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 boolean on = ((ToggleButton) view).isChecked();
-                items.get(position).setChecked(on);
+                items.get(position).setPinned(on);
             }
         });
 
@@ -92,7 +92,7 @@ public class ListAdapter extends BaseAdapter {
     }
 
     private void configureSymbol(BaseModel baseModel, ViewHolder viewHolder) {
-        viewHolder.symbol.setChecked(baseModel.isChecked());
+        viewHolder.symbol.setChecked(baseModel.isPinned());
     }
 
     public static class ViewHolder {

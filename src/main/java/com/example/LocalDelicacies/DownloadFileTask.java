@@ -1,15 +1,20 @@
 package com.example.LocalDelicacies;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import events.DownloadEvent;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 /**
@@ -84,8 +89,38 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
         Gson gson = new Gson();
         LocationList locationList = gson.fromJson(result, LocationList.class);
 
-        AppBus.getInstance().postToBus(new DownloadEvent(locationList));
+        populateTables(locationList);
+
+        AppBus.getInstance().postToBus(new DownloadEvent());
         progressDialog.dismiss();
         super.onPostExecute(result);
+    }
+
+    private void populateTables(LocationList locationList) {
+        SQLiteDatabase sqLite = new DBHelper(context).getWritableDatabase();
+        ContentValues values = new ContentValues();
+        ArrayList<LocationModel> locationModels = locationList.getLocationModels();
+        ArrayList<DelicacyModel> delicacyModels = new ArrayList<DelicacyModel>();
+
+        for(LocationModel i:locationModels){
+            delicacyModels.addAll(i.getDelicacies());
+
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_NAME, i.getTitle());
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_DESCRIPTION, i.getDescription());
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL, i.getImageUrl());
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_PINNED, i.isPinned());
+
+            sqLite.insert(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values);
+        }
+
+        for(DelicacyModel i:delicacyModels){
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_NAME, i.getTitle());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_DESCRIPTION, i.getDescription());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_IMAGE_URL, i.getImageUrl());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_PINNED, i.isPinned());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_RATING, i.getRating());
+
+            sqLite.insert(DBContract.DBEntry.DELICACY_TABLE_NAME, null, values);
+        }
     }
 }

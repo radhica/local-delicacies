@@ -7,24 +7,23 @@ import java.io.Serializable;
  */
 public class BaseModel implements Serializable{
 
-    
     private String title;
     private String description;
     private String imageUrl;
-    private boolean isChecked;
+    private boolean pinned;
     
     // Only for local testing purposes
-    public BaseModel(String title, String imageUrl, String description) {
+    public BaseModel(String title, String description, String imageUrl) {
         this.title = title;
-        this.imageUrl = imageUrl;
         this.description = description;
+        this.imageUrl = imageUrl;
     }
 
-    public BaseModel(String title, String imageUrl, String description, boolean isChecked) {
+    public BaseModel(String title, String description, String imageUrl, boolean pinned) {
         this.title = title;
-        this.imageUrl = imageUrl;
         this.description = description;
-        this.isChecked = isChecked;
+        this.imageUrl = imageUrl;
+        this.pinned = pinned;
     }
 
     public String getTitle() {
@@ -39,12 +38,12 @@ public class BaseModel implements Serializable{
         return R.drawable.placeholder;
     }
 
-    public boolean isChecked() {
-        return isChecked;
+    public boolean isPinned() {
+        return pinned;
     }
 
-    public void setChecked(boolean isChecked) {
-        this.isChecked = isChecked;
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
     }
 
     public String getDescription() {

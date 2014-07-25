@@ -6,8 +6,7 @@ import android.provider.BaseColumns;
  * Created by rsampath on 7/25/14.
  */
 public class DBContract {
-    public DBContract() {
-    }
+    public DBContract() {}
 
     public static abstract class DBEntry implements BaseColumns{
         public static final String LOCATION_TABLE_NAME = "Location";

@@ -13,7 +13,7 @@ public class LocationModel extends BaseModel{
     private ArrayList<DelicacyModel> delicacies = new ArrayList<DelicacyModel>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    public LocationModel(String title, String imageUrl, String description) {
+    public LocationModel(String title, String description, String imageUrl) {
         super(title, description, imageUrl );
     }
 

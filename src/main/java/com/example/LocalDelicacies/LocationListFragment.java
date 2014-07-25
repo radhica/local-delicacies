@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.google.gson.Gson;
 import com.squareup.otto.Subscribe;
 import events.DownloadEvent;
 
@@ -41,15 +40,7 @@ public class LocationListFragment extends Fragment {
         ViewPager viewPager = getViewPager();
         viewPager.setAdapter(viewPagerAdapter);
 
-
         return layout;
-    }
-
-    public ArrayList<LocationModel> populateModels() {
-        items = new ArrayList<LocationModel>();
-        pinnedItems = new ArrayList<LocationModel>();
-
-        return items;
     }
 
     protected void setTabs(ActionBar actionBar, ActionBar.TabListener tabListener) {
@@ -62,14 +53,14 @@ public class LocationListFragment extends Fragment {
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        locationList = downloadEvent.getResult();
-        this.items = locationList.getLocationModels();
-        Log.d("Download complete; item size:\t", "" + items.size());
         populateListViews();
         viewPagerAdapter.notifyDataSetChanged();
     }
 
     private void populateListViews() {
+        this.items = new LocationListLoader(this.getActivity()).loadInBackground();
+        Log.d("Loading complete; item size:\t", "" + items.size());
+
         if (items == null)
             items = populateModels();
 
@@ -82,10 +73,17 @@ public class LocationListFragment extends Fragment {
         pages.add(pinnedListView);
     }
 
+    public ArrayList<LocationModel> populateModels() {
+        items = new ArrayList<LocationModel>();
+        pinnedItems = new ArrayList<LocationModel>();
+
+        return items;
+    }
+
     private void checkedPinned() {
         pinnedItems.clear();
         for (LocationModel i : items) {
-            if (i.isChecked())
+            if (i.isPinned())
                 pinnedItems.add(i);
         }
     }
@@ -111,6 +109,18 @@ public class LocationListFragment extends Fragment {
         viewPagerAdapter = new ViewPagerAdapter(pages);
         viewPager.setOffscreenPageLimit(2);
         return viewPager;
+    }
+
+    @Override
+    public void onResume() {
+        AppBus.getInstance().getBus().register(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        AppBus.getInstance().getBus().unregister(this);
+        super.onPause();
     }
 
     @Override
