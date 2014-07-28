@@ -55,6 +55,8 @@ public class DelicacyListLoader extends AsyncTaskLoader<ArrayList<Delicacy>> {
                 delicacies.add(newDelicacy);
             } while (cursor.moveToNext());
         }
+
+        sqLiteDatabase.close();
     }
 
     private boolean getBoolean(int i) {return i == 1;}

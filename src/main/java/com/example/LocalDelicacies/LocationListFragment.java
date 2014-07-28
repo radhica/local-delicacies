@@ -33,7 +33,7 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
-        updatePages();
+        updatePages(items);
         populateViewAdapterPages();
 
         ViewPager viewPager = getViewPager();
@@ -105,7 +105,8 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
         class PageListener extends ViewPager.SimpleOnPageChangeListener {
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
-                updatePages();
+                checkedPinned();
+                ((ListAdapter) ((ListView) pages.get(position)).getAdapter()).notifyDataSetChanged();
             }
         }
 
@@ -147,13 +148,12 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Location>> loader, ArrayList<Location> data) {
-        this.items.clear();
-        this.items.addAll(data);
-        updatePages();
+        updatePages(data);
     }
 
-    private void updatePages() {
-        checkedPinned();
+    private void updatePages(ArrayList<Location> data) {
+        this.items.clear();
+        this.items.addAll(data);
 
         for(ListView view: pages)
             ((ListAdapter)view.getAdapter()).notifyDataSetChanged();

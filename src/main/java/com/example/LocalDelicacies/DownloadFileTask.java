@@ -125,5 +125,7 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
 
             sqLite.insertWithOnConflict(DBContract.DBEntry.DELICACY_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
+
+        sqLite.close();
     }
 }

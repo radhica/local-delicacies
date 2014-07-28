@@ -60,6 +60,7 @@ public class LocationListLoader extends AsyncTaskLoader<ArrayList<Location>> {
                 locations.add(newLocation);
             } while (cursor.moveToNext());
         }
+        sqLiteDatabase.close();
     }
 
     private boolean getBoolean(int i) {return i == 1;}

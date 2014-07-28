@@ -34,9 +34,8 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        getLoaderManager().initLoader(0, null, this).forceLoad();
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
-        updatePages(this.items);
+        updatePages(items);
         populateViewAdapterPages();
 
         ViewPager viewPager = getViewPager();
@@ -64,10 +63,8 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
         pages.add(listView);
 
         checkedPinned();
-        if(pinnedItems.size() != 0) {
-            ListView pinnedListView = createListView(pinnedItems);
-            pages.add(pinnedListView);
-        }
+        ListView pinnedListView = createListView(pinnedItems);
+        pages.add(pinnedListView);
     }
 
     private void checkedPinned() {
@@ -161,7 +158,6 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
     private void updatePages(ArrayList<Delicacy> data) {
         this.items.clear();
         this.items.addAll(data);
-        //viewPagerAdapter.notifyDataSetChanged();
 
         for(ListView view: pages)
             ((ListAdapter)view.getAdapter()).notifyDataSetChanged();
