@@ -2,6 +2,7 @@ package com.example.LocalDelicacies;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
@@ -14,6 +15,8 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final String TYPE_TEXT = " TEXT";
     public static final String TYPE_INT = " INTEGER";
     public static final String COMMA_SEP = ",";
+    private static final String DB_PATH = "/data/data/com.example.LocalDelicacies./databases/";
+
 
     public static final String CREATE_ENTRIES_LOCATION = "CREATE TABLE " + DBContract.DBEntry.LOCATION_TABLE_NAME + " (" +
     DBContract.DBEntry._ID + " INTEGER PRIMARY KEY," +
@@ -42,8 +45,16 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_ENTRIES_LOCATION);
-        db.execSQL(CREATE_ENTRIES_DELICACY);
+        SQLiteDatabase checkDB = null;
+
+        try{
+            String myPath = DB_PATH + DATABASE_NAME;
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        }catch(SQLiteException e){
+            //database doesn't exist yet.
+            db.execSQL(CREATE_ENTRIES_LOCATION);
+            db.execSQL(CREATE_ENTRIES_DELICACY);
+        }
     }
 
     @Override

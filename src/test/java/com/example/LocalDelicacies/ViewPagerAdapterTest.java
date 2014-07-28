@@ -3,6 +3,7 @@ package com.example.LocalDelicacies;
 import android.app.Activity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,17 +18,17 @@ import static support.Assert.FragmentUtil.startFragment;
 
 @RunWith(RobolectricTestRunner.class)
 public class ViewPagerAdapterTest {
-    ArrayList<View> testPages;
+    ArrayList<ListView> testPages;
     private ViewPagerAdapter viewPagerAdapter;
     private LinearLayout linearLayout;
 
     @Before
     public void setUp() throws Exception {
         linearLayout = new LinearLayout(Robolectric.application.getApplicationContext());
-        testPages = new ArrayList<View>();
-        testPages.add(new View(Robolectric.application.getApplicationContext()));
-        testPages.add(new View(Robolectric.application.getApplicationContext()));
-        testPages.add(new View(Robolectric.application.getApplicationContext()));
+        testPages = new ArrayList<ListView>();
+        testPages.add(new ListView(Robolectric.application.getApplicationContext()));
+        testPages.add(new ListView(Robolectric.application.getApplicationContext()));
+        testPages.add(new ListView(Robolectric.application.getApplicationContext()));
         viewPagerAdapter = new ViewPagerAdapter(testPages);
     }
 

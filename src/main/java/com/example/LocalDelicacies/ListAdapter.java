@@ -61,8 +61,8 @@ public class ListAdapter extends BaseAdapter {
             }
         });
 
+        configureTitle(items.get(position), viewHolder);
         configureImage(items.get(position), viewHolder);
-        configureText(items.get(position), viewHolder);
         configureSymbol(items.get(position), viewHolder);
 
         return convertView;
@@ -70,24 +70,15 @@ public class ListAdapter extends BaseAdapter {
 
     //public for testing
     public void configureImage(BaseModel baseModel, ViewHolder viewHolder) {
-        String url = "";
-        String modelType = ((Object) baseModel).getClass().getSimpleName();
-
-        if(modelType.equals("LocationModel"))
-            url = "http://i.imgur.com/16MFwqc.jpg";
-        else
-            url = "http://i.imgur.com/E2QXn3B.jpg";
-
         Picasso.with(context)
-               .load(url)
+               .load(baseModel.getImageUrl())
                .placeholder(R.drawable.placeholder)
                .resizeDimen(R.dimen.image_width, R.dimen.image_height)
                .centerCrop()
                .into(viewHolder.image);
-
     }
 
-    private void configureText(BaseModel baseModel, ViewHolder viewHolder) {
+    private void configureTitle(BaseModel baseModel, ViewHolder viewHolder) {
         viewHolder.name.setText(baseModel.getTitle());
     }
 

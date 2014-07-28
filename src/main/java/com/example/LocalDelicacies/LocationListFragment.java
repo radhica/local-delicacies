@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 public class LocationListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Location>> {
 
-    private ArrayList<Location> items;
-    private ArrayList<Location> pinnedItems;
-    protected ArrayList<View> pages = new ArrayList<View>();
+    private ArrayList<Location> items = new ArrayList<Location>();
+    private ArrayList<Location> pinnedItems = new ArrayList<Location>();
+    protected ArrayList<ListView> pages = new ArrayList<ListView>();
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
     private View layout;
@@ -32,10 +32,9 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getLoaderManager().initLoader(0, null, this);
-
+        getLoaderManager().initLoader(0, null, this).forceLoad();
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
-        populateListViews();
+        populateViewAdapterPages();
 
         ViewPager viewPager = getViewPager();
         viewPager.setAdapter(viewPagerAdapter);
@@ -53,18 +52,13 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        populateListViews();
-        viewPagerAdapter.notifyDataSetChanged();
+        updatePages(this.items);
     }
 
-    private void populateListViews() {
-        if (items == null)
-            populateItems();
-        if (pinnedItems == null)
-            populatePinnedItems();
-
+    private void populateViewAdapterPages() {
         ListView listView = createListView(items);
         pages.add(listView);
+
 
         checkedPinned();
 
@@ -72,14 +66,6 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
             ListView pinnedListView = createListView(pinnedItems);
             pages.add(pinnedListView);
         }
-    }
-
-    public void populateItems() {
-        items = new ArrayList<Location>();
-    }
-
-    public void populatePinnedItems() {
-        pinnedItems = new ArrayList<Location>();
     }
 
     private void checkedPinned() {
@@ -166,8 +152,16 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Location>> loader, ArrayList<Location> data) {
-        this.items = data;
-        populateListViews();
+        updatePages(data);
+    }
+
+    private void updatePages(ArrayList<Location> data) {
+        this.items.clear();
+        this.items.addAll(data);
+        //viewPagerAdapter.notifyDataSetChanged();
+
+        for(ListView view: pages)
+            ((ListAdapter)view.getAdapter()).notifyDataSetChanged();
     }
 
     @Override

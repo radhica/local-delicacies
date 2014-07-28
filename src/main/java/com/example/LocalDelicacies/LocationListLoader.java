@@ -4,6 +4,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,14 @@ public class LocationListLoader extends AsyncTaskLoader<ArrayList<Location>> {
     }
 
     @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+    }
+
+    @Override
     public ArrayList<Location> loadInBackground() {
         populateLocationModelsFromDb();
+        Log.d("Inside async loader's background",""+locations.size());
         return locations;
     }
 

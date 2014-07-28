@@ -8,21 +8,23 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.squareup.otto.Subscribe;
+import com.sun.xml.internal.rngom.digested.DListPattern;
 import events.DownloadEvent;
 
 import java.util.ArrayList;
 
 public class DelicacyListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Delicacy>>  {
 
-    private ArrayList<Delicacy> items;
-    private ArrayList<Delicacy> pinnedItems;
-    protected ArrayList<View> pages = new ArrayList<View>();
+    private ArrayList<Delicacy> items = new ArrayList<Delicacy>();
+    private ArrayList<Delicacy> pinnedItems = new ArrayList<Delicacy>();
+    protected ArrayList<ListView> pages = new ArrayList<ListView>();
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
     private View layout;
@@ -32,10 +34,9 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getLoaderManager().initLoader(0, null, this);
-
+        getLoaderManager().initLoader(0, null, this).forceLoad();
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
-        populateListViews();
+        populateViewAdapterPages();
 
         ViewPager viewPager = getViewPager();
         viewPager.setAdapter(viewPagerAdapter);
@@ -55,33 +56,18 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        populateListViews();
-        viewPagerAdapter.notifyDataSetChanged();
+        updatePages(this.items);
     }
 
-    private void populateListViews() {
-        if (items == null)
-            populateItems();
-        if (pinnedItems == null)
-            populatePinnedItems();
-
+    private void populateViewAdapterPages() {
         ListView listView = createListView(items);
         pages.add(listView);
 
         checkedPinned();
-
         if(pinnedItems.size() != 0) {
             ListView pinnedListView = createListView(pinnedItems);
             pages.add(pinnedListView);
         }
-    }
-
-    public void populateItems() {
-        items = new ArrayList<Delicacy>();
-    }
-
-    public void populatePinnedItems() {
-        pinnedItems = new ArrayList<Delicacy>();
     }
 
     private void checkedPinned() {
@@ -168,8 +154,16 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Delicacy>> loader, ArrayList<Delicacy> data) {
-        this.items = data;
-        populateListViews();
+        updatePages(data);
+    }
+
+    private void updatePages(ArrayList<Delicacy> data) {
+        this.items.clear();
+        this.items.addAll(data);
+        //viewPagerAdapter.notifyDataSetChanged();
+
+        for(ListView view: pages)
+            ((ListAdapter)view.getAdapter()).notifyDataSetChanged();
     }
 
     @Override

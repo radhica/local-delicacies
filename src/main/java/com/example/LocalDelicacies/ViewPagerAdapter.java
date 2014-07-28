@@ -3,6 +3,7 @@ package com.example.LocalDelicacies;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -10,9 +11,9 @@ import java.util.ArrayList;
  * Created by bnegron on 7/23/14.
  */
 public class ViewPagerAdapter extends PagerAdapter {
-    ArrayList<View> pages;
+    ArrayList<ListView> pages;
 
-    public ViewPagerAdapter(ArrayList<View> pages) {
+    public ViewPagerAdapter(ArrayList<ListView> pages) {
         this.pages = pages;
     }
 
