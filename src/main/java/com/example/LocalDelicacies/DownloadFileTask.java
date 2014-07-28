@@ -103,23 +103,25 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
         List<Location> locations = locationList.getLocations();
         ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
 
-        for(Location i: locations){
-            delicacies.addAll(i.getDelicacies());
+        for(int i = 0; i < locations.size(); i++){
+            delicacies.addAll(locations.get(i).getDelicacies());
 
-            values.put(DBContract.DBEntry.LOCATION_COLUMN_NAME, i.getTitle());
-            values.put(DBContract.DBEntry.LOCATION_COLUMN_DESCRIPTION, i.getDescription());
-            values.put(DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL, i.getImageUrl());
-            values.put(DBContract.DBEntry.LOCATION_COLUMN_PINNED, i.isPinned());
+            values.put(DBContract.DBEntry._ID, i);
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_NAME, locations.get(i).getTitle());
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_DESCRIPTION, locations.get(i).getDescription());
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL, locations.get(i).getImageUrl());
+            values.put(DBContract.DBEntry.LOCATION_COLUMN_PINNED, locations.get(i).isPinned());
 
             sqLite.insertWithOnConflict(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
 
-        for(Delicacy i: delicacies){
-            values.put(DBContract.DBEntry.DELICACY_COLUMN_NAME, i.getTitle());
-            values.put(DBContract.DBEntry.DELICACY_COLUMN_DESCRIPTION, i.getDescription());
-            values.put(DBContract.DBEntry.DELICACY_COLUMN_IMAGE_URL, i.getImageUrl());
-            values.put(DBContract.DBEntry.DELICACY_COLUMN_PINNED, i.isPinned());
-            values.put(DBContract.DBEntry.DELICACY_COLUMN_RATING, i.getRating());
+        for(int i = 0; i < delicacies.size(); i++){
+            values.put(DBContract.DBEntry._ID, i);
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_NAME, delicacies.get(i).getTitle());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_DESCRIPTION, delicacies.get(i).getDescription());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_IMAGE_URL, delicacies.get(i).getImageUrl());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_PINNED, delicacies.get(i).isPinned());
+            values.put(DBContract.DBEntry.DELICACY_COLUMN_RATING, delicacies.get(i).getRating());
 
             sqLite.insertWithOnConflict(DBContract.DBEntry.DELICACY_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }

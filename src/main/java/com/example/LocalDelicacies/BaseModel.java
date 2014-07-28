@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class BaseModel implements Serializable{
 
+    private int id;
     private String title;
     private String description;
     private String imageUrl;
@@ -26,6 +27,10 @@ public class BaseModel implements Serializable{
         this.pinned = pinned;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -34,8 +39,8 @@ public class BaseModel implements Serializable{
         return imageUrl;
     }
 
-    public int getImageId(){
-        return R.drawable.placeholder;
+    public String getDescription() {
+        return description;
     }
 
     public boolean isPinned() {
@@ -44,9 +49,5 @@ public class BaseModel implements Serializable{
 
     public void setPinned(boolean pinned) {
         this.pinned = pinned;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }
