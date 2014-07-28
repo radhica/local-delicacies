@@ -12,7 +12,7 @@
 
     <!--List View Name-->
     <TextView
-            android:id="@+id/base_item_name"
+            android:id="@+id/base_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/text_padding"
@@ -32,5 +32,17 @@
             style="@style/toggleButton"
             android:background="@drawable/ic_toggle_bg"/>
 
+    <!--Rating Bar-->
+    <RatingBar
+            android:id="@+id/locale_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/base_item_image"
+            android:numStars="5"
+            android:rating="1"
+            android:stepSize="1"
+            android:layout_centerHorizontal="true"
+            android:longClickable="false"
+            android:visibility="gone"/>
 </merge>
 

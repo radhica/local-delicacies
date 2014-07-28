@@ -86,7 +86,7 @@ public class ListAdapterTest {
     public void getView_viewReturnedShouldHaveName() throws Exception{
         for(int index = 0; index < items.size(); index++){
             View view = getViewAtIndex(index);
-            assertViewIsVisible(view.findViewById(R.id.base_item_name));
+            assertViewIsVisible(view.findViewById(R.id.base_item_title));
         }
     }
 

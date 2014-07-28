@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/base_item"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:descendantFocusability="blocksDescendants">
 
-    <include layout="@layout/base_item" />
-
-    <!--Detail View Rating-->
-    <RatingBar
-            android:id="@+id/locale_rating_bar"
-            android:layout_width="wrap_content"
+    <!--Cover View-->
+    <com.example.LocalDelicacies.CoverView
+            xmlns:custom="http://schemas.android.com/apk/res/com.example.LocalDelicacies"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/base_item_image"
-            android:numStars="5"
-            android:rating="1"
-            android:stepSize="1"
-            android:layout_centerHorizontal="true"
-            android:longClickable="false"
-            android:visibility="gone"/>
+            custom:placeHolder="@drawable/placeholder"
+            custom:showRatingBar="true"/>
 
     <!--Detail View Description-->
     <TextView
@@ -31,4 +24,4 @@
             android:paddingTop="@dimen/text_padding"
             android:gravity="left"/>
 
-</RelativeLayout>
+</LinearLayout>

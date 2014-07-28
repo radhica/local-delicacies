@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.LocalDelicacies.CoverView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res/com.example.LocalDelicacies"
                 android:id="@+id/base_item"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:descendantFocusability="blocksDescendants">
-
-    <include layout="@layout/base_item" />
-
-</RelativeLayout>
+                custom:placeHolder="@drawable/placeholder"
+                custom:showRatingBar="false"
+                android:descendantFocusability="blocksDescendants"/>

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class DetailActivity extends Activity{
 
     private BaseModel detailItem;
+    private ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
     private RatingBar ratingBar;
     private int itemId;
 
@@ -40,7 +41,7 @@ public class DetailActivity extends Activity{
     }
 
     private void populateDetails() {
-        TextView detailName = (TextView) findViewById(R.id.base_item_name);
+        TextView detailName = (TextView) findViewById(R.id.base_item_title);
         detailName.setText(detailItem.getTitle());
 
         ImageView detailImage = (ImageView) findViewById(R.id.base_item_image);
@@ -53,6 +54,13 @@ public class DetailActivity extends Activity{
 
         TextView detailDesc = (TextView) findViewById(R.id.detail_description);
         detailDesc.setText(detailItem.getDescription());
+
+        if(detailItem instanceof Location)
+            populateDelicacies();
+    }
+
+    private void populateDelicacies() {
+        delicacies.addAll(((Location) detailItem).getDelicacies());
     }
 
     @Override
@@ -66,7 +74,7 @@ public class DetailActivity extends Activity{
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.base_item, container, false);
+            View rootView = inflater.inflate(R.layout.cover_view, container, false);
             return rootView;
         }
     }
