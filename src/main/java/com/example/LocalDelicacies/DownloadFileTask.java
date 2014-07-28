@@ -111,8 +111,7 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
             values.put(DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL, i.getImageUrl());
             values.put(DBContract.DBEntry.LOCATION_COLUMN_PINNED, i.isPinned());
 
-            Log.d("Added values at row:\t",
-                ""+sqLite.insert(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values));
+            sqLite.insertWithOnConflict(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
 
         for(Delicacy i: delicacies){
@@ -122,7 +121,7 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
             values.put(DBContract.DBEntry.DELICACY_COLUMN_PINNED, i.isPinned());
             values.put(DBContract.DBEntry.DELICACY_COLUMN_RATING, i.getRating());
 
-            sqLite.insert(DBContract.DBEntry.DELICACY_TABLE_NAME, null, values);
+            sqLite.insertWithOnConflict(DBContract.DBEntry.DELICACY_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         }
     }
 }

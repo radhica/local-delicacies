@@ -1,6 +1,8 @@
 package com.example.LocalDelicacies;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +60,20 @@ public class ListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 boolean on = ((ToggleButton) view).isChecked();
                 items.get(position).setPinned(on);
+
+//                SQLiteDatabase sqLite = new DBHelper(context).getWritableDatabase();
+//                ContentValues values = new ContentValues();
+//                if(items.get(position) instanceof Location){
+//                    values.put(DBContract.DBEntry.LOCATION_COLUMN_NAME, items.get(position).getTitle());
+//                    values.put(DBContract.DBEntry.LOCATION_COLUMN_DESCRIPTION, items.get(position).getDescription());
+//                    values.put(DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL, items.get(position).getImageUrl());
+//                    values.put(DBContract.DBEntry.LOCATION_COLUMN_PINNED, items.get(position).isPinned());
+//
+//                    sqLite.update(DBContract.DBEntry.LOCATION_TABLE_NAME, values, "_id=", null);
+//                }
+//                else{
+//
+//                }
             }
         });
 

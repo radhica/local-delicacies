@@ -34,8 +34,9 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getLoaderManager().initLoader(0, null, this).forceLoad();
+//        getLoaderManager().initLoader(0, null, this).forceLoad();
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
+        updatePages(this.items);
         populateViewAdapterPages();
 
         ViewPager viewPager = getViewPager();
@@ -56,7 +57,6 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        updatePages(this.items);
     }
 
     private void populateViewAdapterPages() {
@@ -86,7 +86,7 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent detailView = new Intent(getActivity(), DetailActivity.class);
-                detailView.putExtra("items", items);
+                detailView.putExtra("item", items.get(position));
                 detailView.putExtra("itemId", position);
                 startActivity(detailView);
             }
@@ -103,6 +103,7 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(0, null, this).forceLoad();
         super.onActivityCreated(savedInstanceState);
 
         final ActionBar actionBar = getActivity().getActionBar();

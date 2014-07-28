@@ -18,10 +18,9 @@ import java.util.ArrayList;
  */
 public class DetailActivity extends Activity{
 
-    private ArrayList<BaseModel> items = new ArrayList<BaseModel>();
     private BaseModel detailItem;
-    private int itemId;
     private RatingBar ratingBar;
+    private int itemId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +29,11 @@ public class DetailActivity extends Activity{
 
         ratingBar = (RatingBar) findViewById(R.id.locale_rating_bar);
         Bundle detailInfo = getIntent().getExtras();
-        this.items = (ArrayList<BaseModel>) detailInfo.getSerializable("items");
+        this.detailItem = (BaseModel) detailInfo.getSerializable("item");
         this.itemId = detailInfo.getInt("itemId");
-        detailItem = items.get(itemId);
         toggleRatingBarView();
 
-        if(items != null)
+        if(detailItem != null)
             populateDetails();
 
         getActionBar().setDisplayShowHomeEnabled(false);
@@ -46,15 +44,8 @@ public class DetailActivity extends Activity{
         detailName.setText(detailItem.getTitle());
 
         ImageView detailImage = (ImageView) findViewById(R.id.base_item_image);
-        String url = "";
-        String modelType = ((Object) detailItem).getClass().getSimpleName();
-        if(modelType.equals("CityModel"))
-            url = "http://i.imgur.com/16MFwqc.jpg";
-        else
-            url = "http://i.imgur.com/E2QXn3B.jpg";
-
         Picasso.with(this)
-                .load(url)
+                .load(detailItem.getImageUrl())
                 .placeholder(R.drawable.placeholder)
                 .centerCrop()
                 .resizeDimen(R.dimen.image_width,R.dimen.image_height)
@@ -74,10 +65,8 @@ public class DetailActivity extends Activity{
         public PlaceholderFragment() { }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.base_item,
-                    container, false);
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.base_item, container, false);
             return rootView;
         }
     }

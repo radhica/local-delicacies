@@ -45,16 +45,8 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        SQLiteDatabase checkDB = null;
-
-        try{
-            String myPath = DB_PATH + DATABASE_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-        }catch(SQLiteException e){
-            //database doesn't exist yet.
-            db.execSQL(CREATE_ENTRIES_LOCATION);
-            db.execSQL(CREATE_ENTRIES_DELICACY);
-        }
+        db.execSQL(CREATE_ENTRIES_LOCATION);
+        db.execSQL(CREATE_ENTRIES_DELICACY);
     }
 
     @Override

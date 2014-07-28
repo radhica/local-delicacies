@@ -32,8 +32,8 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getLoaderManager().initLoader(0, null, this).forceLoad();
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
+        updatePages();
         populateViewAdapterPages();
 
         ViewPager viewPager = getViewPager();
@@ -52,20 +52,15 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-        updatePages(this.items);
     }
 
     private void populateViewAdapterPages() {
         ListView listView = createListView(items);
         pages.add(listView);
 
-
         checkedPinned();
-
-        if(pinnedItems.size() != 0) {
-            ListView pinnedListView = createListView(pinnedItems);
-            pages.add(pinnedListView);
-        }
+        ListView pinnedListView = createListView(pinnedItems);
+        pages.add(pinnedListView);
     }
 
     private void checkedPinned() {
@@ -84,7 +79,7 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent detailView = new Intent(getActivity(), DetailActivity.class);
-                detailView.putExtra("items", items);
+                detailView.putExtra("item", items.get(position));
                 detailView.putExtra("itemId", position);
                 startActivity(detailView);
             }
@@ -101,6 +96,7 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(0, null, this).forceLoad();
         super.onActivityCreated(savedInstanceState);
 
         final ActionBar actionBar = getActivity().getActionBar();
@@ -109,8 +105,7 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
         class PageListener extends ViewPager.SimpleOnPageChangeListener {
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
-                checkedPinned();
-                ((ListAdapter) ((ListView) pages.get(position)).getAdapter()).notifyDataSetChanged();
+                updatePages();
             }
         }
 
@@ -152,13 +147,13 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Location>> loader, ArrayList<Location> data) {
-        updatePages(data);
-    }
-
-    private void updatePages(ArrayList<Location> data) {
         this.items.clear();
         this.items.addAll(data);
-        //viewPagerAdapter.notifyDataSetChanged();
+        updatePages();
+    }
+
+    private void updatePages() {
+        checkedPinned();
 
         for(ListView view: pages)
             ((ListAdapter)view.getAdapter()).notifyDataSetChanged();
