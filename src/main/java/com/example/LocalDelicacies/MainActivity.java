@@ -3,8 +3,10 @@ package com.example.LocalDelicacies;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -18,6 +20,8 @@ import events.DelicacyEvent;
 import events.DownloadEvent;
 import events.LocationEvent;
 import events.LocationListEvent;
+
+import java.io.File;
 
 /**
  * Created by bnegron on 7/21/14.
@@ -34,7 +38,14 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         registerWithBus();
-        new DownloadFileTask(this).execute(getString(R.string.json_url));
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(!preferences.getBoolean("First run", false)) {
+            new DownloadFileTask(this).execute(getString(R.string.json_url));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("First run", true);
+            editor.commit();
+        }
 
         setContentView(R.layout.main_activity);
 

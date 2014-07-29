@@ -108,7 +108,9 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
             values.put(DBContract.DBEntry.LOCATION_COLUMN_IMAGE_URL, locations.get(i).getImageUrl());
             values.put(DBContract.DBEntry.LOCATION_COLUMN_PINNED, locations.get(i).isPinned());
 
-            sqLite.insertWithOnConflict(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            long result = sqLite.insertWithOnConflict(DBContract.DBEntry.LOCATION_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            locations.get(i).setId(i);
+            Log.d("SQLite insertion row:\t", ""+result);
         }
 
         for(int i = 0; i < delicacies.size(); i++){
@@ -119,7 +121,9 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
             values.put(DBContract.DBEntry.DELICACY_COLUMN_PINNED, delicacies.get(i).isPinned());
             values.put(DBContract.DBEntry.DELICACY_COLUMN_RATING, delicacies.get(i).getRating());
 
-            sqLite.insertWithOnConflict(DBContract.DBEntry.DELICACY_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            long result = sqLite.insertWithOnConflict(DBContract.DBEntry.DELICACY_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            delicacies.get(i).setId(i);
+            Log.d("SQLite insertion row:\t", ""+result);
         }
 
         sqLite.close();
