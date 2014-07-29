@@ -2,12 +2,12 @@ package com.example.LocalDelicacies;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
@@ -20,7 +20,6 @@ public class DetailActivity extends Activity{
 
     private BaseModel detailItem;
     private ArrayList<Delicacy> delicacies = new ArrayList<Delicacy>();
-    private RatingBar ratingBar;
     private int itemId;
 
     @Override
@@ -28,11 +27,9 @@ public class DetailActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
 
-        ratingBar = (RatingBar) findViewById(R.id.locale_rating_bar);
         Bundle detailInfo = getIntent().getExtras();
         this.detailItem = (BaseModel) detailInfo.getSerializable("item");
         this.itemId = detailInfo.getInt("itemId");
-        toggleRatingBarView();
 
         if(detailItem != null)
             populateDetails();
@@ -57,6 +54,10 @@ public class DetailActivity extends Activity{
 
         if(detailItem instanceof Location)
             populateDelicacies();
+        else
+            ((CoverView) findViewById(R.id.detail_cover_view)).setShowRatingBar(true);
+
+        ((CoverView) findViewById(R.id.detail_cover_view)).getShowRatingBar();
     }
 
     private void populateDelicacies() {
@@ -76,14 +77,6 @@ public class DetailActivity extends Activity{
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.cover_view, container, false);
             return rootView;
-        }
-    }
-
-    private void toggleRatingBarView() {
-        if (detailItem instanceof Delicacy) {
-            ratingBar.setVisibility(View.VISIBLE);
-        } else {
-            ratingBar.setVisibility(View.GONE);
         }
     }
 }

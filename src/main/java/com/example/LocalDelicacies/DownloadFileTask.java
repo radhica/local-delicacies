@@ -55,9 +55,6 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
                 connection.setDoInput(true);
 
                 connection.connect();
-                int response = connection.getResponseCode();
-                Log.d("Response code:\t", ""+response);
-
                 in = connection.getInputStream();
             } catch (Exception e){Log.d("Exception downloading:\t", e.toString());}
         }
@@ -89,7 +86,6 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
         Gson gson = new Gson();
         LocationList locationList = gson.fromJson(result, LocationList.class);
 
-        Log.d("Populating tables with list of size:\t", ""+locationList.getLocations().size());
         populateTables(locationList);
 
         AppBus.getInstance().postToBus(new DownloadEvent());

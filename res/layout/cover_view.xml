@@ -34,7 +34,7 @@
 
     <!--Rating Bar-->
     <RatingBar
-            android:id="@+id/locale_rating_bar"
+            android:id="@+id/rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/base_item_image"

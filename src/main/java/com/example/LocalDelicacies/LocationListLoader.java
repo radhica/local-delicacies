@@ -29,7 +29,6 @@ public class LocationListLoader extends AsyncTaskLoader<ArrayList<Location>> {
     @Override
     public ArrayList<Location> loadInBackground() {
         populateLocationModelsFromDb();
-        Log.d("Inside async loader's background",""+locations.size());
         return locations;
     }
 
