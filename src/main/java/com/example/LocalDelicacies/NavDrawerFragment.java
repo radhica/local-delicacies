@@ -41,13 +41,13 @@ public class NavDrawerFragment extends Fragment {
     private void selectItem(int position) {
         switch (position){
             case 0:
-                AppBus.getInstance().postToBus(new LocationEvent());
+                AppBus.postToBus(new LocationEvent());
                 break;
             case 1:
-                AppBus.getInstance().postToBus(new DelicacyEvent());
+                AppBus.postToBus(new DelicacyEvent());
                 break;
             default:
-                AppBus.getInstance().postToBus(new BaseEvent());
+                AppBus.postToBus(new BaseEvent());
                 break;
         }
     }

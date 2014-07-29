@@ -8,14 +8,12 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.squareup.otto.Subscribe;
-import com.sun.xml.internal.rngom.digested.DListPattern;
 import events.DownloadEvent;
 
 import java.util.ArrayList;
@@ -24,7 +22,9 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
 
     private ArrayList<Delicacy> items = new ArrayList<Delicacy>();
     private ArrayList<Delicacy> pinnedItems = new ArrayList<Delicacy>();
+    private ArrayList<Delicacy> ratedItems = new ArrayList<Delicacy>();
     protected ArrayList<ListView> pages = new ArrayList<ListView>();
+
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
     private View layout;
@@ -35,13 +35,15 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
-        updatePages(items);
-        populateViewAdapterPages();
 
-        ViewPager viewPager = getViewPager();
-        viewPager.setAdapter(viewPagerAdapter);
+        initViewPager();
+        loadDataFromDb();
 
         return layout;
+    }
+
+    private void loadDataFromDb() {
+        getLoaderManager().initLoader(0, null, this).forceLoad();
     }
 
     protected void setTabs(ActionBar actionBar, ActionBar.TabListener tabListener) {
@@ -56,23 +58,7 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
-    }
-
-    private void populateViewAdapterPages() {
-        ListView listView = createListView(items);
-        pages.add(listView);
-
-        checkedPinned();
-        ListView pinnedListView = createListView(pinnedItems);
-        pages.add(pinnedListView);
-    }
-
-    private void checkedPinned() {
-        pinnedItems.clear();
-        for (Delicacy i : items) {
-            if (i.isPinned())
-                pinnedItems.add(i);
-        }
+        loadDataFromDb();
     }
 
     private ListView createListView(final ArrayList<Delicacy> items) {
@@ -91,16 +77,47 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
         return allListView;
     }
 
-    private ViewPager getViewPager() {
+    private void initViewPager() {
         viewPager = (ViewPager) layout.findViewById(R.id.view_pager);
+
+        populateViewAdapterPages();
+
         viewPagerAdapter = new ViewPagerAdapter(pages);
         viewPager.setOffscreenPageLimit(2);
-        return viewPager;
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    private void populateViewAdapterPages() {
+        ListView listView = createListView(items);
+        pages.add(listView);
+
+        checkedPinned();
+        ListView pinnedListView = createListView(pinnedItems);
+        pages.add(pinnedListView);
+
+        checkRated();
+        ListView ratedListView = createListView(ratedItems);
+        pages.add(ratedListView);
+    }
+
+    private void checkedPinned() {
+        pinnedItems.clear();
+        for (Delicacy i : items) {
+            if (i.isPinned())
+                pinnedItems.add(i);
+        }
+    }
+
+    private void checkRated() {
+        ratedItems.clear();
+        for (Delicacy i : items) {
+            if (i.getRating() >= 1)
+                ratedItems.add(i);
+        }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        getLoaderManager().initLoader(0, null, this).forceLoad();
         super.onActivityCreated(savedInstanceState);
 
         final ActionBar actionBar = getActivity().getActionBar();
@@ -152,10 +169,10 @@ public class DelicacyListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Delicacy>> loader, ArrayList<Delicacy> data) {
-        updatePages(data);
+        updatePageData(data);
     }
 
-    private void updatePages(ArrayList<Delicacy> data) {
+    private void updatePageData(ArrayList<Delicacy> data) {
         this.items.clear();
         this.items.addAll(data);
 

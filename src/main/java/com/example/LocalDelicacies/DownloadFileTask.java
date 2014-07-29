@@ -88,9 +88,8 @@ public class DownloadFileTask extends AsyncTask<String, Void, String> {
 
         populateTables(locationList);
 
-        AppBus.getInstance().postToBus(new DownloadEvent());
+        AppBus.postToBus(new DownloadEvent());
         progressDialog.dismiss();
-        super.onPostExecute(result);
     }
 
     private void populateTables(LocationList locationList) {

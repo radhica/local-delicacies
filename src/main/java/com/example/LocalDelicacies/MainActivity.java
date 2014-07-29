@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(!preferences.getBoolean("First run", false)) {
             new DownloadFileTask(this).execute(getString(R.string.json_url));
+
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("First run", true);
             editor.commit();

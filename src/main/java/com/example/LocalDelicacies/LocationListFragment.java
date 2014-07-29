@@ -23,6 +23,7 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
     private ArrayList<Location> items = new ArrayList<Location>();
     private ArrayList<Location> pinnedItems = new ArrayList<Location>();
     protected ArrayList<ListView> pages = new ArrayList<ListView>();
+
     private ViewPagerAdapter viewPagerAdapter;
     private ViewPager viewPager;
     private View layout;
@@ -33,13 +34,15 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.list_fragment_layout, container, false);
-        updatePages(items);
-        populateViewAdapterPages();
 
-        ViewPager viewPager = getViewPager();
-        viewPager.setAdapter(viewPagerAdapter);
+        initViewPager();
+        loadDataFromDb();
 
         return layout;
+    }
+
+    private void loadDataFromDb() {
+        getLoaderManager().initLoader(0, null, this).forceLoad();
     }
 
     protected void setTabs(ActionBar actionBar, ActionBar.TabListener tabListener) {
@@ -52,6 +55,33 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Subscribe
     public void onDownloadEvent(DownloadEvent downloadEvent) {
+        loadDataFromDb();
+    }
+
+    private ListView createListView(final ArrayList<Location> items) {
+        ListView allListView = new ListView(layout.getContext());
+        ListAdapter allListAdapter = new ListAdapter(getActivity(), items);
+        allListView.setAdapter(allListAdapter);
+        allListView.setOnItemClickListener(new ListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent detailView = new Intent(getActivity(), DetailActivity.class);
+                detailView.putExtra("item", items.get(position));
+                detailView.putExtra("itemId", position);
+                startActivity(detailView);
+            }
+        });
+        return allListView;
+    }
+
+    private void initViewPager() {
+        viewPager = (ViewPager) layout.findViewById(R.id.view_pager);
+
+        populateViewAdapterPages();
+
+        viewPagerAdapter = new ViewPagerAdapter(pages);
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(viewPagerAdapter);
     }
 
     private void populateViewAdapterPages() {
@@ -71,32 +101,8 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
         }
     }
 
-    private ListView createListView(final ArrayList<Location> items) {
-        ListView allListView = new ListView(layout.getContext());
-        ListAdapter allListAdapter = new ListAdapter(getActivity(), items);
-        allListView.setAdapter(allListAdapter);
-        allListView.setOnItemClickListener(new ListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent detailView = new Intent(getActivity(), DetailActivity.class);
-                detailView.putExtra("item", items.get(position));
-                detailView.putExtra("itemId", position);
-                startActivity(detailView);
-            }
-        });
-        return allListView;
-    }
-
-    private ViewPager getViewPager() {
-        viewPager = (ViewPager) layout.findViewById(R.id.view_pager);
-        viewPagerAdapter = new ViewPagerAdapter(pages);
-        viewPager.setOffscreenPageLimit(2);
-        return viewPager;
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        getLoaderManager().initLoader(0, null, this).forceLoad();
         super.onActivityCreated(savedInstanceState);
 
         final ActionBar actionBar = getActivity().getActionBar();
@@ -148,10 +154,10 @@ public class LocationListFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Location>> loader, ArrayList<Location> data) {
-        updatePages(data);
+        updatePageData(data);
     }
 
-    private void updatePages(ArrayList<Location> data) {
+    private void updatePageData(ArrayList<Location> data) {
         this.items.clear();
         this.items.addAll(data);
 
